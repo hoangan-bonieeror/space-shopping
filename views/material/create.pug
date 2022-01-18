@@ -1,0 +1,19 @@
+
+extends ../layout/common.pug
+
+block formCreate
+		h1.d-flex.justify-content-center.pt-4 Create Material 
+		form(action="/material/create" method="POST" style="width:40%; margin: auto; border : 5px solid #f1f1f1;")
+			if error
+				.alert.alert-danger.mt-2(style="margin : 10px")= error
+			div(class="container" style="margin-bottom : 10px; margin-top: 10px;")
+				label(style="margin-right : 20px;  margin-bottom : 5px;") Name
+				input(type='text' name="name" style="font-size : 20px;  margin-bottom : 10px;" class="form-control" value=values ? values.name : '')
+				label(style="margin-right : 20px;  margin-bottom : 5px;") Unit
+				input(type='text' name="unit" style="font-size : 20px;  margin-bottom : 10px;" class="form-control" value=values ? values.unit : '')
+				label(for="exampleFormControlSelect1" style="margin-right : 20px;  margin-bottom : 5px;") Price on a unit (VNĐ)
+				input(type='text' name="unitprice" style="font-size : 20px;  margin-bottom : 10px;" class="form-control" value=values ? values.unitprice : '')
+				hr
+				div.d-flex.justify-content-center
+					button.mb-3(style='width : 200px; margin : auto;'  class="btn btn-primary") Create
+					a.mb-3(href="/material/all" style='width : 200px; margin : auto;'  class="btn btn-primary") Back

@@ -1,0 +1,16 @@
+extends ../layout/common.pug
+
+block formLogin
+  div.justify-content-center.row.mt-5
+      div(class="col-md-4")
+        form.shadow-lg.bg-white(action="/login" method="POST" style="width:100%; border : 3px solid black; border-radius : 1rem ; padding : 1rem " id='formLogin')
+          h4.mb-2(style="text-align : center") Sign In
+          if error
+            .alert.alert-danger= error
+          .form-floating
+            input.mb-4(type='text' id="email" name="email" value= email ? this.email : '' class="form-control" placeholder="Email" style="border : none ; border-bottom : 2px solid black ; outline : none ; background : transparent ; border-radius : unset")
+            label(for="email" style="transition : .5s") Email
+          .form-floating
+            input.mb-4(type='password' id="password" name="password" style="border : none ; border-bottom : 2px solid black ; outline : none ; background : transparent ; border-radius : unset" class="form-control" placeholder="Password")
+            label(for="password" style="transition : .5s") Password
+          button.btn.btn-dark Sign In 

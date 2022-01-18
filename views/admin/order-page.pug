@@ -1,0 +1,90 @@
+extends ./sidebar.pug
+
+block orderPage
+    .row.mb-3
+        .col-md-12
+            nav(aria-label='breadcrumb')
+                ol.breadcrumb
+                    li.breadcrumb-item
+                        a(href='#') Admin
+                    li.breadcrumb-item.active(aria-current='page') Order
+    .row.mb-2
+        .col-md-12
+            h5.d-inline Order
+            //- a.mb-1.btn.btn-outline-dark(href="#" style="margin-left : 1rem;") New Product
+            form.d-inline(action="/admin/order" method="GET")
+                .input-group(id='searchArea' )
+                    input.form-control(name="key" type="text" placeholder='Enter the email...' aria-describedby='searchBtn' id='inputSearch' onMouseOver="this.style.border : '3px'" onMouseOut="this.style.border : '1px'" value=(key) ? key : '')
+                    .input-group-append
+                        button.btn.btn-outline-dark(type='submit' id='searchBtn') Search
+            if key
+                br
+                h5.mt-2(style="float : right; display : unset")= `Search result for the word : "${key}"` 
+    .row.mt-2
+        .col-md-12
+            table.table.table-hover.align-middle(id='order_tbl')
+                thead
+                    tr(style="display : table; width : 98.6% ; table-layout : fixed")
+                        th(scope='col' style="width: 5%; text-align : center") ID
+                        th(scope='col' style="width: 25%") Email
+                        th(scope='col') Phone
+                        th(scope='col') Date
+                        th(scope='col') Status
+                        th(scope='col') Total Price
+                        th(scope='col')
+                tbody(style='width : 100% ; max-height: 600px ; display:block ; overflow-y:scroll ;')
+                    if orders
+                        each order in orders 
+                            tr(style="display : table; width : 100% ; table-layout : fixed")
+                                th(id='id' style="width: 5%; text-align : center")= order.id
+                                td(id="email" style="width: 25%")= order.email
+                                td(id="numberphone")= order.numberphone
+                                - var [dateCreate] = order.createdAt.split(',') 
+                                td(id="createdAt")= dateCreate
+                                td(id="status")= order.status
+                                td(id='total_price')= order.total_price + '$'
+                                td.justify-content-center(style="padding-top : 3px")
+                                    button.btn.btn-outline-dark.mt-1(type="button" data-bs-toggle="modal" data-bs-target=`#${'detail' + order.id}`) Detail
+                                    .modal.fade(id=`${'detail' + order.id}` tabindex="-1" role="dialog"  aria-labelledby="labelUpdate" aria-hidden="true")
+                                        .modal-dialog.modal-lg(style="max-width: 1350px!important;")
+                                            .modal-content
+                                                .modal-header
+                                                    h5.modal-title= `Order ${order.id}`
+                                                    input.form-control(type="text" style ="max-width : 150px ; background : cyan ; text-transform : capitalize; text-align : center " value=order.status disabled)
+                                                .modal-body
+                                                    .container-fluid
+                                                        .row
+                                                            .col-md-6
+                                                                ul.list-group.list-group-flush
+                                                                    li.list-group-item= 'ID : ' + order.id
+                                                                    li.list-group-item= 'Fullname : ' + order.firstname.concat(' ', order.lastname)
+                                                                    li.list-group-item= 'Address : ' + order.address.concat(' ', order.city)
+                                                                    li.list-group-item= 'Phone : ' + order.numberphone
+                                                                    li.list-group-item= 'Email : ' + order.email
+                                                                    li.list-group-item= (order.note !== '') ? 'Note : ' + order.note : 'Note : -' 
+                                                                    li.list-group-item= 'Created : ' + order.createdAt 
+                                                                    li.list-group-item= 'Updated : ' + order.updatedAt
+                                                                    -if(order.id_staff !== null) {
+                                                                        li.list-group-item= 'Staff : ' + order.id_staff
+                                                                    -}
+                                                            .col-md-6
+                                                                table.table.table-hover.align-middle
+                                                                    thead
+                                                                        tr
+                                                                            th(scope='col') ID
+                                                                            th(scope='col' style="text-align : center") Image
+                                                                            th(scope='col') Name
+                                                                            th(scope='col') Qty
+                                                                            th(scope='col') Subtotal
+                                                                    tbody
+                                                                        each product in order.products
+                                                                            tr
+                                                                                th(id='id')= product.id
+                                                                                td(id='image' style="text-align : center")
+                                                                                    img(src=product.image1)
+                                                                                td(id='name')= product.name
+                                                                                td(id='qty')= product.qty
+                                                                                td(id='subtotal')= product.price * product.qty + '$'
+                                                                    caption= `Total : ${order.total_price}$` 
+
+                                                                      

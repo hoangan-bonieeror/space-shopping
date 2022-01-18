@@ -1,0 +1,56 @@
+tr
+    th(id="id")= each.id
+    td(id="name")= each.firstname + ' ' + each.lastname
+    td(id="phone")= each.numberphone
+    td(id="time" style="text-align : center")= each.createdAt.replace(',', ' | ')
+    td(id="status" style="text-transform : capitalize")= each.status
+    td(id="total")= each.total_price + '$'
+    td.justify-content-center(style="padding-top : 3px")
+        -var [username] = each.email.split('@')
+        button.btn.btn-dark.detailBtn(type="button" data-bs-toggle="modal" data-bs-target=`#${username + each.id}`) Detail
+        .modal.fade(id=`${username + each.id}` tabindex="-1" role="dialog"  aria-labelledby="labelUpdate" aria-hidden="true")
+            .modal-dialog.modal-lg(style="max-width: 1350px!important;")
+                .modal-content
+                    .modal-header
+                        h5.modal-title= `Order ${each.id}`
+                        input.form-control(type="text" style ="width : 10% ; background : cyan ; text-transform : capitalize; text-align : center " value=each.status disabled)
+                    .modal-body 
+                        .container
+                            .row
+                                .col-md-6
+                                    table.table.table-hover.align-middle
+                                        tbody
+                                            tr
+                                                th
+                                                th
+                                                th
+                                                th
+                                            each product in each.products
+                                                tr
+                                                    th(id="image1")
+                                                        img(src=product.image1 width="50" height="50" style ="object-fit : cover" )
+                                                    th(id="product_name")= product.name
+                                                    th(id="quantity")=' x' + product.qty
+                                                    th(id="sub_price")= product.qty*product.price + '$'
+                                .col-md-6
+                                    ul.list-group.list-group-flush
+                                        li.list-group-item= `Fullname : ${each.firstname + ' ' + each.lastname}`
+                                        li.list-group-item= `Address : ${each.address} | City : ${each.city}`
+                                        li.list-group-item= `Phone number : ${each.numberphone}`
+                                        li.list-group-item= `Email : ${each.email}`
+                                        li.list-group-item= `Status : ${each.status}`
+                                        li.list-group-item= `Time : ${each.createdAt}`
+                                        li.list-group-item= (each.note === '' || each.note === null) ? 'Note : Nothing' : `Note : ${each.note}`
+                            .row.mb-2
+                                .col-md-12
+                                    h5= `Total order : ${each.total_price}$`
+                            -var options = ['delivered', 'delivering','cancel']
+                            -if(options.includes(each.status)) {
+                            -} else {
+                                hr
+                                .row.mb-2
+                                    .col-md-8
+                                        h5(style="text-align : right ;margin-top : 6px") You can cancel this order if any change in your plan
+                                    .col-md-4
+                                        a.btn.btn-dark#cancelBtn(href=`/account/my/order/${each.id}/cancel`) Cancel order
+                                -}

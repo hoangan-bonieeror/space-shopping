@@ -1,0 +1,28 @@
+/* .navbar {
+  width: 100%;
+  background-color: #555;
+  overflow: auto;
+}
+
+.navbarItem {
+  float: left;
+  padding: 12px;
+  color: white;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.navbarItem :hover {
+  background-color: #000;
+}
+
+.active {
+  background-color: #4CAF50;
+}
+
+@media screen and (max-width: 500px) {
+  .navbarItem {
+    float: none;
+    display: block;
+  }
+} */

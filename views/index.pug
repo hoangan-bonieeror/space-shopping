@@ -1,0 +1,28 @@
+extends ./layout/common.pug
+
+block content
+	.row.mb-3
+		.col-md-12
+			#carouselExampleControls.carousel.slide(data-bs-ride='carousel' data-interval="3000" style="background-color : grey ; border-radius : 1rem")
+				.carousel-inner
+					.carousel-item.active(style="height : 500px; transition : transform .6s")
+						img.d-block.w-100(src="assets/poster/4480029.jpg", alt='Poster 1' style="width: 100%; height : 30vw; object-fit :cover")
+					.carousel-item(style="height : 500px; transition : transform .6s")
+						img.d-block.w-100(src='assets/poster/4996365.jpg', alt='Second slide' style="width: 100%; height: 30vw; object-fit: cover;")
+					.carousel-item(style="height : 500px; transition : transform .6s")
+						img.d-block.w-100(src='assets/poster/5501964.jpg', alt='Third slide' style="width: 100%; height: 30vw; object-fit: cover;")
+				a.carousel-control-prev(href='#carouselExampleControls', role='button', data-bs-slide='prev')
+					span.carousel-control-prev-icon(aria-hidden='true')
+					span.sr-only Previous
+				a.carousel-control-next(href='#carouselExampleControls', role='button', data-bs-slide='next')
+					span.carousel-control-next-icon(aria-hidden='true')
+					span.sr-only Next
+	if data 
+		h3 New Release
+		.series.mb-2(style="display : grid; grid-auto-columns : 350px; grid-gap : 2rem ; grid-template-rows : 1fr ; width : 100%; overflow-x : auto; ")
+			each product in data
+				.item-new(name="item-new" style="grid-row : 1 ; grid-column : auto;")
+					.card(style="height : 500px; border-radius : 1rem ; cursor : pointer" onclick=`window.location = "/product/${product.id}"`)
+						img.card-img-top(src=product.image1 style="width: 100%; height: 25vw; object-fit: cover; border-radius : 1rem 1rem 0 0")
+						.card-body
+							p.card-title= product.name  

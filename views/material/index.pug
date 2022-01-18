@@ -1,0 +1,30 @@
+extends ../layout/common.pug
+
+block content
+    h2  Material List
+    form(action="/staff/search" method="GET")
+    .input-group.mb-3(style="width : 50%; align : center;")
+        input(type='text' name="key"  placeholder ="Enter..." class="form-control" style="width : 50%; display : inline;" value=values ? values.key : '')
+        .input-group-append
+            button.btn.btn-outline-secondary Search
+    a.btn.btn-primary.mb-2(href="/material/create" style="float : right") Add new material
+    table(style='width:100%; margin: auto;' class="table")
+        thead
+            tr
+                th(scope='col') ID
+                th(scope='col') Name
+                th(scope='col') Quantity
+                th(scope='col') Unit
+                th(scope='col' style="text-align : center") Price on unit (VNĐ)
+        tbody
+            -if(materials && materials.length === 0) {
+                tr
+                    th(colspan=4)= "There is no material match"
+            -}
+            each material in materials
+                tr(style='text-align:left')
+                    th(id="id")= material.id
+                    th(id="name")= material.materialname
+                    th(id="quanity")= material.quantity
+                    th(id="unit")= material.unit
+                    th(id="unitprice" style='text-align : center')= material.unitprice

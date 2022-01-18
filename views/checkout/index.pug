@@ -1,0 +1,66 @@
+extends ../layout/common.pug
+
+block formCheckout
+    .row.justify-content-center(style="margin-top : 40px;")
+        .col-md-12
+            form.shadow-lg.bg-white(action="/cart/order" method="POST" style="border : 3px solid grey; border-radius : 3rem") 
+                .row(style = "padding : 1.5rem")
+                    .col-md-6
+                        h5(style="text-align : center") Order Summary
+                        hr
+                        table.table
+                            tbody
+                                tr
+                                    th(id="name") Name
+                                    th(id="total_price") Sub total
+                                -var total = 0
+                                if cart 
+                                    each item in cart
+                                        -total += parseInt(item.sub_total)
+                                        tr
+                                            th(id='name')= item.name + ' x ' + item.qty
+                                            th(id='total_price')= item.sub_total + '$'
+                                tr
+                                    th(colspan='4')= 'Total price : ' + total + '$' 
+                    .col-md-6
+                        h5(style="text-align : center") Checkout
+                        hr
+                        form
+                            .row.mb-3
+                                .col-md-6
+                                    label Firstname
+                                    input.form-control(type="text" name="firstname" value=(currentUser.firstname) ? currentUser.firstname : '')
+                                .col-md-6
+                                    label Lastname
+                                    input.form-control(type="text" name="lastname" value=(currentUser.lastname) ? currentUser.lastname : '')
+                            .row.mb-3
+                                .col-md-6
+                                    label Address
+                                    input.form-control(type="text" name="address" value=(currentUser.address) ? currentUser.address : '')
+                                -if (cityList) {
+                                        .col-md-6
+                                            label.mb-1(for="city") City
+                                            select.form-select(id="city" name="city")
+                                                -if (currentUser) {
+                                                    option(value=currentUser.city)= currentUser.city
+                                                -} 
+                                                -cityList.forEach(city => {
+                                                    -if(city.name !== currentUser.city) {
+                                                        option(value=city.name)= city.name
+                                                    -}
+                                                -})
+                                -}
+                            .row.mb-3
+                                .col-md-12
+                                    label Number Phone
+                                    input.form-control(type="text" name="numberphone" value=(currentUser.mobile_number) ? currentUser.mobile_number : '')
+                            .row.mb-3
+                                .col.md-12
+                                    lable(for="#note") Note
+                                    textarea.form-control(name="note", cols="63")
+                            hr
+                            .row.mb-2
+                                .col-md-12
+                                    button.btn.btn-primary(type="submit") Checkout
+                        
+
