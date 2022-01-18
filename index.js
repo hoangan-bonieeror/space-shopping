@@ -2,6 +2,7 @@ const express = require('express')
 const app = express();
 
 const fetch = require('node-fetch')
+const cors = require('cors')
 require('dotenv').config()
 
 const loginRoute = require('./routes/login.route')
@@ -15,9 +16,9 @@ const { requireAuth } = require('./middlewares/auth.middleware')
 
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser');
-const req = require('express/lib/request');
 
 
+app.use(cors())
 app.use(cookieParser())
 app.set('view engine', 'pug');
 app.set('views', './views');
