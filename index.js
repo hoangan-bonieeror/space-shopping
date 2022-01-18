@@ -45,7 +45,7 @@ app.use('/cart', requireAuth, cartRoute)
 app.use('/admin', requireAuth , adminRoute)
 app.use('/', logoutRoute)
 // GET POST PUT DELETE PATCH
-app.listen(3100, () => console.log('Listening on port', 3100))
+app.listen(process.env.PORT || 5000, () => console.log('Listening on port', process.env.PORT || 5000))
 
 app.get('/login', (req, res) => {
 	res.render('login/login')
