@@ -1,9 +1,9 @@
 extends ../layout/common.pug
 
 block product-detailPage
-    .container-fluid#detail-product
+    .container#detail-product
         .row
-            .col-md-6
+            .col-xl-6.col-md-12
                 .product-gallery
                     .carousel.slide(id=`carouselProduct-${product.id}` data-bs-ride="carousel")
                         .carousel-inner
@@ -51,7 +51,7 @@ block product-detailPage
                         //-     span.carousel-control-prev-icon(aria-hidden='true' style="background-color : black")
                         //- button.carousel-control-next(role='button' data-bs-target=`#carouselProduct-${product.id}` data-bs-slide='next' )
                         //-     span.carousel-control-next-icon(aria-hidden='true' style="background-color : black")                                                                                                                                                                                                           
-            .col-md-6
+            .col-xl-6.col-md-12
                 h5= product.name
                 p= 'Price : ' + product.price + '$'
                 p= 'Quantity : ' + product.quantity

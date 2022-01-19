@@ -2,7 +2,7 @@ extends ../layout/common.pug
 
 block formLogin
   div.justify-content-center.row.mt-5
-      div(class="col-md-4")
+      div.col-xl-4.col-md-7
         form.shadow-lg.bg-white(action="/login" method="POST" style="width:100%; border : 3px solid black; border-radius : 1rem ; padding : 1rem " id='formLogin')
           h4.mb-2(style="text-align : center") Sign In
           if error
