@@ -41,13 +41,18 @@
     transform : scale(1.05);
 }
 
+.btn-signin {
+    margin-right: 3px;
+}
 
 #add-to-cart:hover,
 button.detailBtn:hover,
 #submitArea a:hover,
 #submitArea button:hover,
 #formLogin button:hover,
-#cancelBtn:hover  {
+#cancelBtn:hover,
+.btn-signin:hover,
+.btn-signup:hover  {
     color : black;
     background-color : white; 
 }

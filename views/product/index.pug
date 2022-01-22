@@ -26,37 +26,36 @@ block productPage
                 .toast-body= message
                 button.btn-close.me-2.m-auto(type="button" data-bs-dismiss="toast" aria-label="Close" id="btnClose")
     -}
-    .container-fluid
-        div.row(style="padding : 1rem ; padding-top : unset")
-            .col-md-2(style="z-index : +1")
-                #list-example.list-group(style = "position : fixed; width : 250px ")
-                    a.list-group-item.list-group-item-action.mb-1(href="/product/all" ) All product
-                    -if (brand) {
-                    -    let path = '/product/filter'
-                    -    brand.forEach(each => {
-                        .btn-group.dropend.mb-1
-                            a.list-group-item.list-group-item-action(href=path + '?id_brand=' + each.id)= each.name
-                            a.btn.btn-secondary.dropdown-toggle(id="brand_categories" data-bs-toggle="dropdown" aria-expanded="false" href=path + '?id=' + each.id)
-                            -if(category.length > 0) {
-                                ul.dropdown-menu(aria-labelledby="brand_categories" style="transition : 0.2s")
-                                    -category.forEach(one => {
-                                        li
-                                            a.dropdown-item(href=path + '?id_brand=' + each.id + '&id_category=' + one.id)= one.name
-                                    -})
-                            -}
-                    -   })
-                    -}
-            - if(products.length == 0) {
-                h5(style="padding-left : 1rem")= "There is no any product matched"
-            -} else {
-                .col-md-10
-                    .row
-                        form(action="/product/all" method="GET")
-                            .input-group.mb-3(style="width : 50%; padding : 1rem ; padding-bottom : unset")
-                                input(type='text' id='inputSearch' name="key"  placeholder ="Enter..." class="form-control" value=key ? key : '')
-                                .input-group-append
-                                    button.btn.btn-outline-secondary(id='btn-searchProduct') Search
-                        -   products.forEach(product => {
-                                include product.pug
-                        -   })
-                -}
+    .container
+        //- div.row(style="padding : 1rem ; padding-top : unset")
+        //-     .col-md-2(style="z-index : +1")
+        //-         #list-example.list-group(style = "position : fixed; width : 250px ")
+        //-             a.list-group-item.list-group-item-action.mb-1(href="/product/all" ) All product
+        //-             -if (brand) {
+        //-             -    let path = '/product/filter'
+        //-             -    brand.forEach(each => {
+        //-                 .btn-group.dropend.mb-1
+        //-                     a.list-group-item.list-group-item-action(href=path + '?id_brand=' + each.id)= each.name
+        //-                     a.btn.btn-secondary.dropdown-toggle(id="brand_categories" data-bs-toggle="dropdown" aria-expanded="false" href=path + '?id=' + each.id)
+        //-                     -if(category.length > 0) {
+        //-                         ul.dropdown-menu(aria-labelledby="brand_categories" style="transition : 0.2s")
+        //-                             -category.forEach(one => {
+        //-                                 li
+        //-                                     a.dropdown-item(href=path + '?id_brand=' + each.id + '&id_category=' + one.id)= one.name
+        //-                             -})
+        //-                     -}
+        //-             -   })
+        //-             -}
+        - if(products.length == 0) {
+            h5(style="padding-left : 1rem")= "There is no any product matched"
+        -} else {
+            .row
+                form(action="/product/all" method="GET")
+                    .input-group.mb-3(style="width : 50%; padding : 1rem ; padding-bottom : unset")
+                        input(type='text' id='inputSearch' name="key"  placeholder ="Enter..." class="form-control" value=key ? key : '')
+                        .input-group-append
+                            button.btn.btn-outline-secondary(id='btn-searchProduct') Search
+                -   products.forEach(product => {
+                        include product.pug
+                -   })
+            -}

@@ -1,50 +1,46 @@
 nav#navbar-space(class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="padding : 0.5rem")
-    a.navbar-brand(href="#") Space
-    button(class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#dropdownMenu" aria-controls="dropdownMenu" aria-expanded="true" aria-label="Toggle navigation")
-        span.navbar-toggler-icon
-    div.collapse.navbar-collapse(id="dropdownMenu")
-        ul.navbar-nav.mt-1
-            li.nav-item
-                a.active(href='/',class="nav-link") Home
-            //- li.nav-item
-            //- 	a(href="/staff" class="nav-link") Member
-            li.nav-item
-                a(href="/product/all" class="nav-link") Product
-            //- li.nav-item
-            //- 	a(href="#" class="nav-link") My account
-            //- li.nav-item 
-            //- 	a(href="/material/all" class="nav-link") Material
-            -if(currentUser) {
+    .container-fluid
+        a.navbar-brand(href="#") Space
+        button(class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#dropdownMenu" aria-controls="dropdownMenu" aria-expanded="true" aria-label="Toggle navigation")
+            span.navbar-toggler-icon
+        div.collapse.navbar-collapse(id="dropdownMenu")
+            ul.navbar-nav
                 li.nav-item
-                    a.nav-link(id="icon-cart" href=(currentUser) ? "/account/my/checkout" : "/login" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Shopping cart" )
-                        svg(style="" width="30px" height="30px" varia-hidden="true" focusable="false" data-prefix="fas" data-icon="cart-shopping" class="svg-inline--fa fa-cart-shopping" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512")
-                            path(d="M96 0C107.5 0 117.4 8.19 119.6 19.51L121.1 32H541.8C562.1 32 578.3 52.25 572.6 72.66L518.6 264.7C514.7 278.5 502.1 288 487.8 288H170.7L179.9 336H488C501.3 336 512 346.7 512 360C512 373.3 501.3 384 488 384H159.1C148.5 384 138.6 375.8 136.4 364.5L76.14 48H24C10.75 48 0 37.25 0 24C0 10.75 10.75 0 24 0H96zM128 464C128 437.5 149.5 416 176 416C202.5 416 224 437.5 224 464C224 490.5 202.5 512 176 512C149.5 512 128 490.5 128 464zM512 464C512 490.5 490.5 512 464 512C437.5 512 416 490.5 416 464C416 437.5 437.5 416 464 416C490.5 416 512 437.5 512 464z")
-                        - var quantity = 0
-                        - if (users && currentUser) {
-                        -   users.forEach(user => {
-                        -       if(user.id === currentUser.id) {
-                        -           user.cart.forEach(item => {
-                        -               quantity += parseInt(item.qty)
-                        -})
-                        -}
-                        -})
-                        -}
-                            span.position-absolute.translate-middle.badge.rounded-pill.bg-danger(style="top : 20px; font-size : 14x")= quantity
+                    a.active(href='/',class="nav-link") Home
                 li.nav-item
-                    .dropdown.nav-link#myAccount
-                        button.btn.btn-light.dropdown-toggle(style="padding : unset" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false")= (currentUser.lastname && currentUser.firstname) ? currentUser.lastname + ' ' + currentUser.firstname : currentUser.email
-                        ul.dropdown-menu(style="right : 0.35rem; top : 2.5rem ; left : unset" aria-labelledby="dropdownMenuButton")
-                            li
-                                a.dropdown-item(href="/account/my/information" ) My Account
-                            li
-                                a.dropdown-item(href="/account/my/checkout") Checkout
-                            .dropdown-divider
-                            li
-                                a.dropdown-item(href="/logout") Logout
-                                    i.fas.fa-sign-out-alt(style="margin-left : 4rem;")
-            -} else {
+                    a(href="#" class="nav-link") Blog
                 li.nav-item
-                    a.nav-link(href="/login" id='btn-signin') Sign In
+                    a(href="/product/all" class="nav-link") Shop
+            ul.navbar-nav.ms-auto
                 li.nav-item
-                    a.nav-link(href="/user/register" id='btn-signup') Sign Up
-            -}
+                    -if(currentUser) {
+                        .d-flex
+                            a.nav-link(id="icon-cart" href=(currentUser) ? "/account/my/checkout" : "/login" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Shopping cart" )
+                                svg(style="" width="30px" height="30px" varia-hidden="true" focusable="false" data-prefix="fas" data-icon="cart-shopping" class="svg-inline--fa fa-cart-shopping" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512")
+                                    path(d="M96 0C107.5 0 117.4 8.19 119.6 19.51L121.1 32H541.8C562.1 32 578.3 52.25 572.6 72.66L518.6 264.7C514.7 278.5 502.1 288 487.8 288H170.7L179.9 336H488C501.3 336 512 346.7 512 360C512 373.3 501.3 384 488 384H159.1C148.5 384 138.6 375.8 136.4 364.5L76.14 48H24C10.75 48 0 37.25 0 24C0 10.75 10.75 0 24 0H96zM128 464C128 437.5 149.5 416 176 416C202.5 416 224 437.5 224 464C224 490.5 202.5 512 176 512C149.5 512 128 490.5 128 464zM512 464C512 490.5 490.5 512 464 512C437.5 512 416 490.5 416 464C416 437.5 437.5 416 464 416C490.5 416 512 437.5 512 464z")
+                                - var quantity = 0
+                                - if (users && currentUser) {
+                                -   users.forEach(user => {
+                                -       if(user.id === currentUser.id) {
+                                -           user.cart.forEach(item => {
+                                -               quantity += parseInt(item.qty)
+                                -})
+                                -}
+                                -})
+                                -}
+                                    span.translate-middle.badge.rounded-pill.bg-danger(style="top : 15px; font-size : 12px")= quantity
+                            .dropdown.nav-link#myAccount
+                                button.btn.btn-light.dropdown-toggle(style="padding : unset" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false")= (currentUser.lastname && currentUser.firstname) ? currentUser.lastname + ' ' + currentUser.firstname : currentUser.email
+                                ul.dropdown-menu(style="right : 0.35rem; top : 2.5rem ; left : unset" aria-labelledby="dropdownMenuButton")
+                                    li
+                                        a.dropdown-item(href="/account/my/information" ) My Account
+                                    li
+                                        a.dropdown-item(href="/account/my/checkout") Checkout
+                                    .dropdown-divider
+                                    li
+                                        a.dropdown-item(href="/logout") Logout
+                                            i.fas.fa-sign-out-alt(style="margin-left : 4rem;")
+                    -} else {
+                        a.btn.btn-dark.btn-signin(href="/login" id='btn-signin') Sign In
+                        a.btn.btn-dark.btn-signup(href="/user/register" id='btn-signup') Sign Up
+                    -}
