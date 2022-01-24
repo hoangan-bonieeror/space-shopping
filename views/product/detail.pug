@@ -1,7 +1,7 @@
 extends ../layout/common.pug
 
 block product-detailPage
-    .container#detail-product
+    .container-fluid#detail-product
         .row
             .col-xl-6.col-md-12
                 .product-gallery
@@ -17,9 +17,9 @@ block product-detailPage
                                 img(src=product.image4)
                             .carousel-item
                                 img(src=product.image5)
-                        button.carousel-control-prev(role='button' data-bs-target=`#carouselProduct-${product.id}` data-bs-slide='prev' )
+                        button.carousel-control-prev#btn-prev(role='button' data-bs-target=`#carouselProduct-${product.id}` data-bs-slide='prev' )
                             span.carousel-control-prev-icon(aria-hidden='true' style="background-color : black ; border-radius : 1.5rem; width : 60px; height : 30%;")
-                        button.carousel-control-next(role='button' data-bs-target=`#carouselProduct-${product.id}` data-bs-slide='next' )
+                        button.carousel-control-next#btn-next(role='button' data-bs-target=`#carouselProduct-${product.id}` data-bs-slide='next' )
                             span.carousel-control-next-icon(aria-hidden='true' style="background-color : black ; border-radius : 1.5rem; width : 60px; height : 30%;")
                 br
                 .selection-product
@@ -52,15 +52,16 @@ block product-detailPage
                         //- button.carousel-control-next(role='button' data-bs-target=`#carouselProduct-${product.id}` data-bs-slide='next' )
                         //-     span.carousel-control-next-icon(aria-hidden='true' style="background-color : black")                                                                                                                                                                                                           
             .col-xl-6.col-md-12
-                h5= product.name
-                p= 'Price : ' + product.price + '$'
-                p= 'Quantity : ' + product.quantity
-                br
-                .accordion(id="productDescription")
-                    .accordion-item
-                        h2.accordion-header  
-                            button.accordion-button.collapsed(type="button" data-bs-toggle="collapse" data-bs-target=`#collapseOne-${product.id}` aria-expanded="true" aria-controls=`collapseOne-${product.id}`) Description
-                        .accordion-collapse.collapse(aria-labelledby="headingOne" data-bs-parent="#productDescription" id=`collapseOne-${product.id}`)
-                            .accordion-body
-                                p= product.description
+                .information-product
+                    h5= product.name
+                    p= 'Price : ' + product.price + '$'
+                    p= 'Quantity : ' + product.quantity
+                    br
+                    .accordion(id="productDescription")
+                        .accordion-item
+                            h2.accordion-header  
+                                button.accordion-button.collapsed(type="button" data-bs-toggle="collapse" data-bs-target=`#collapseOne-${product.id}` aria-expanded="true" aria-controls=`collapseOne-${product.id}`) Description
+                            .accordion-collapse.collapse(aria-labelledby="headingOne" data-bs-parent="#productDescription" id=`collapseOne-${product.id}`)
+                                .accordion-body
+                                    p= product.description
                 

@@ -57,9 +57,17 @@ app.get('/', requireAuth, async (req, res) => {
 
 		let response = await data.json()
 
+		const dataBrand = await fetch(process.env.ROOT_API_PATH + 'customer/brand', {method : 'GET'})
+        let brands = await dataBrand.json()
+
+        const dataCategory = await fetch(process.env.ROOT_API_PATH + 'customer/category', {method : 'GET'})
+        let categories = await dataCategory.json()
+
 		if (response.code === 200) {
 			return res.render('index', {
-				data: response.data
+				data: response.data,
+				brand : brands.data,
+				category : categories.data
 			})
 		}
 	} catch (err) {

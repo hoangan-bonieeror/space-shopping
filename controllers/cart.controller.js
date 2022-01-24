@@ -39,6 +39,7 @@ module.exports.addToCart = (req,res) => {
                         })
                     }
                 }
+            res.app.locals.users[index].quantity ++
             }
             // console.log(res.app.locals.users[index].cart)
         })
@@ -113,6 +114,7 @@ module.exports.checkout = async (req,res) => {
 
         if(response.code === 200) {
             res.app.locals.users[cartIndex].cart = new Array()
+            res.app.locals.users[cartIndex].quantity = 0
             res.redirect('/product/all')
             return;
         } else {

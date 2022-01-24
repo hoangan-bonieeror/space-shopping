@@ -2,6 +2,9 @@ extends ./layout/common.pug
 
 block content
 	.row.mb-3
+		.col-md-12.mb-3
+			video(id="video-welcome" width="100%" autoplay)
+				source(src="assets/video/welcome.mp4" type="video/mp4")
 		.col-md-12
 			#carouselExampleControls.carousel.slide(data-bs-ride='carousel' data-interval="3000" style="background-color : grey ; border-radius : 1rem")
 				.carousel-inner

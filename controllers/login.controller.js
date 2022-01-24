@@ -83,7 +83,8 @@ module.exports.postLogin = async (req,res) => {
 			} else {
 				res.app.locals.users.push({
 					id : responseUser.data.id,
-					cart : []
+					cart : [],
+					quantity : 0
 				})
 
 				if(res.app.locals.message) {

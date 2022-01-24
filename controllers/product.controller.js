@@ -134,9 +134,34 @@ const viewDetailProduct = async (req,res) => {
     }
 }
 
+
+const viewDetailProductForCustomer = async (req,res) => {
+    try {
+        let { id_product } = req.params
+
+        let api_path = process.env.ROOT_API_PATH + `customer/product/${id_product}`
+
+        let data = await fetch(api_path, {
+            method : 'GET'
+        })
+
+        let response = await data.json()
+
+        // console.log(response)
+        if(response.code === 200) {
+            return res.render('product/detail', {
+                product : response.data
+            })
+        }
+    } catch(err) {
+        console.log(err)
+    }
+}
+
 module.exports = {
     getAllProduct,
     filterProduct,
     activeProduct,
-    viewDetailProduct
+    viewDetailProduct,
+    viewDetailProductForCustomer
 }
