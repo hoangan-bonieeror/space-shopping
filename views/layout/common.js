@@ -7,6 +7,16 @@ window.onload = (ev) => {
         }
     }
 
+    let closeAlert = document.getElementsByClassName('close')
+    if(closeAlert.length !== 0) {
+        closeAlert[0].onclick = () => {
+            let alertBox = closeAlert[0].parentElement
+            alertBox.classList.remove('bounceInRight');
+            alertBox.classList.add('bounceOutRight');
+            alertBox.style.display = 'none'
+        }
+    }
+
     let itemNew = document.querySelector('.item-new');
     if(itemNew !== null) {
         itemNew.onclick = () => {
