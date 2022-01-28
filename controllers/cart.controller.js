@@ -43,7 +43,7 @@ module.exports.addToCart = (req,res) => {
             }
             // console.log(res.app.locals.users[index].cart)
         })
-        return res.redirect('/product/all')
+        return res.redirect('back')
     } catch(err) {
         console.log(err)
     }  

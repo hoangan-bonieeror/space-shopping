@@ -58,3 +58,14 @@ nav#navbar-space(class="navbar navbar-expand-lg navbar-light bg-light fixed-top"
                             a.btn.btn-dark.btn-signin(href="/login" id='btn-signin') Sign In
                             a.btn.btn-dark.btn-signup(href="/user/register" id='btn-signup') Sign Up
                     -}
+-if(brand) {
+    .offcanvas.offcanvas-top#brand-expanded(aria-labelledby="offcanvasBrand")   
+        .offcanvas-header
+            h4.offcanvas-title#offcanvasBrand Brand
+            button.btn-close.text-reset(type="button" data-bs-dismiss="offcanvas" aria-label="Close")
+        .offcanvas-body
+            ul.cd-filter
+                each brandItem in brand
+                    li.filter
+                        a(href=`/product/filter?id_brand=${brandItem.id}`)= brandItem.name            
+-}
