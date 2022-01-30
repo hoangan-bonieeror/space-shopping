@@ -170,8 +170,18 @@ a.forgot-ps-link:hover {
     text-decoration: underline !important;
 }
 
+nav li.signin-area p {
+    margin-bottom: unset;
+    height: 50%;
+    transform: translate(-10px,10px);
+}
+
 nav li.signin-area:hover {
     background-color: unset !important;
+}
+
+#space-brand {
+    margin-bottom: unset;
 }
 
 #filter-sidebar a {
@@ -224,7 +234,7 @@ nav li.signin-area:hover {
     top: 70px;
     width: 100%;
     z-index: 1;
-    box-shadow: 0 2px 2px #A9A9A9;
+    box-shadow: 0 0 20px 2px #A9A9A9;
 }
 
 .tab-filter button#btn-brand-expanded {
@@ -392,6 +402,10 @@ video {
         padding-right: 5px;
     }
 
+    #navbar-space hr {
+        display: none;
+    }
+
     #tab-filter {
         display: none;
     }
@@ -405,8 +419,21 @@ video {
     nav li.nav-item {
         margin-bottom: .5rem !important;
     }
+
+    nav li.nav-item .nav-link {
+        padding: unset;
+    }
     nav li.signin-area:hover {
         background-color: unset !important;
+    }
+
+    nav li.signin-area .d-flex {
+        display: unset !important;
+    }
+
+    nav li.signin-area p {
+        transform: unset;
+        margin-bottom: 10px;
     }
 
     form#form-signup .information-area {
@@ -478,6 +505,9 @@ video {
         background-color: unset !important;
     }
 
+    #brandSpace {
+        margin-top: 10px;
+    }
     #brandSpace .list-group-item {
         border: unset;
         border-radius: .5rem ;
@@ -519,7 +549,7 @@ video {
         color: #A9A9A9;
     }
 
-    #brand-expanded .offcanvas-header h4 {
+    #brand-expanded .offcanvas-header h1 {
         color: #A9A9A9;
     }
 

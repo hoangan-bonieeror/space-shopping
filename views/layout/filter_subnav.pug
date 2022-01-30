@@ -3,6 +3,8 @@
         i.fas.fa-bars
         | Brand
     ul.cd-filter#cd-filter
+        li.filter
+            a(href="/product/all") All
         each brandItem in brand
             li.filter
                 a(href=`/product/filter?id_brand=${brandItem.id}`)= brandItem.name

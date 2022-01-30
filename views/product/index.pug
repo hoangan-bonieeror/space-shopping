@@ -3,7 +3,7 @@ extends ../layout/common.pug
 block productPage
     include ../layout/filter_subnav.pug
     -if(message) {
-        .alerts
+        .alerts#alertWarning
             .alert.alert-warning.animated.bounceInRight
                 .icon.pull-left#icon
                     i.fa.fa-exclamation-circle.fa-2x
