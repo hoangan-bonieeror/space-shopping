@@ -219,6 +219,10 @@ nav li.signin-area:hover {
     display: none;
 }
 
+#subnav-space .list-group {
+    box-shadow: 7px 7px 10px black;
+}
+
 #subnav-space .list-group-item {
     cursor: pointer;
 }
@@ -270,18 +274,18 @@ nav li.signin-area:hover {
 }
 
 .tab-filter #cd-filter li.filter {
-    border-radius: .5rem;
-    transition: .5s ease;
+    /* border-radius: .5rem; */
+    transition: .3s ease;
 }
 
 .tab-filter #cd-filter li.filter:hover {
-    background-color: #A9A9A9;
+    border-bottom: 5px solid #A9A9A9;
 }
+
+
 .tab-filter #cd-filter li.filter:hover > a {
-    color: white;
+    transform: translate(0,-3px);
 }
-
-
 
 video {
     border-radius: 1rem;
@@ -412,6 +416,10 @@ video {
 }
 
 @media (max-width : 992px) {
+    .container {
+        max-width: unset;
+        width: 100% !important;
+    }
     nav li.nav-item {
         padding-left: 5px !important;
         padding-right: 5px !important;
@@ -496,6 +504,21 @@ video {
         color: black !important;
     }
 
+    #myAccount > button#dropdownMenuButton {
+        background-color: inherit;
+        border-color: white;
+        padding: .5rem !important;
+    }
+
+    .account-area .d-flex > a.nav-link {
+        transform: translate(10px,10px);
+    } 
+
+    #myAccount:hover > button#dropdownMenuButton {
+        background-color: #A9A9A9;
+        color: white;
+    }
+
     #subnav-space {
         display: none !important;
     }
@@ -558,5 +581,20 @@ video {
     }
     #brand-expanded .cd-filter li:hover > a {
         color: white;
+    }
+    
+    .series {
+        grid-auto-columns: 245px !important;
+    }
+
+    .series > .item-new {
+        height : 350px !important;
+        width: 245px !important;
+    }
+
+    .series .item-new > .card {
+        width: inherit !important;
+        height: inherit !important;
+        font-size: 16px !important;
     }
 }

@@ -12,21 +12,22 @@ block myAccount
         .col-md-3
         .col-md-9
             form.pt-2(action="" style="border : 2px solid grey; border-radius : 1rem ; padding : 1rem ")
-                table.table.table-hover
-                    thead
-                        tr
-                            th(scope='col') ID 
-                            th(scope='col') Name
-                            th(scope='col') Phone
-                            th(scope='col' style="text-align : center" ) Date | Time
-                            th(scope="col") Status
-                            th(scope='col') Total
-                            th(scope='col') 
-                    tbody
-                        -if(order && order.length === 0) {
+                .table-responsive
+                    table.table.table-hover
+                        thead
                             tr
-                                th(colspan=6)= "There is no order matched"
-                        -}
-                        each each in order
-                            include orderRow.pug
+                                th(scope='col') ID 
+                                th(scope='col') Name
+                                th(scope='col') Phone
+                                th(scope='col' style="text-align : center" ) Date | Time
+                                th(scope="col") Status
+                                th(scope='col') Total
+                                th(scope='col') 
+                        tbody
+                            -if(order && order.length === 0) {
+                                tr
+                                    th(colspan=6)= "There is no order matched"
+                            -}
+                            each each in order
+                                include orderRow.pug
                 
