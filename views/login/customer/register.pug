@@ -1,10 +1,10 @@
 extends ../../layout/common.pug
 
 block formRegister
-    h1.d-flex.justify-content-center="Sign Up"
-    form.shadow-lg.bg-white#form-signup(action="/user/register" method="POST" style="width:80%; margin : auto ; margin-top : 1rem; border : 5px solid #f1f1f1; border-radius : 1rem")
+    form.shadow-lg.bg-white#form-signup(action="/user/register" method="POST" style="width:80%; margin : auto ; margin-top : 1rem; border : 5px solid #f1f1f1; border-radius : 1rem ;")
         if error
             .alert.alert-danger(style="margin : 1rem; margin-bottom : unset")= error
+        h1.d-flex.justify-content-center.mt-3 Sign Up
         div.container(style="padding : 1.5rem ;")
             .row
                 .col-xl-5.col-md-12.mb-2.user-area
@@ -12,31 +12,31 @@ block formRegister
                         h4(style="text-align : center") Account
                         .col-md-12
                             label(style="margin-right : 20px;  margin-bottom : 10px;") Email
-                            input(type='text' name="email" style="font-size : 20px;  margin-bottom : 10px;" placeholder="example : nguyenvana@gmail.com" class="form-control" value=values ? values.email : '')
+                            input(type='text' name="email" style="margin-bottom : 10px;" placeholder="example : nguyenvana@gmail.com" class="form-control form-control-sm" value=values ? values.email : '')
                         .col-md-12
                             label(style="margin-right : 20px;  margin-bottom : 10px;") Password
-                            input(type='password' name="password" style="font-size : 20px;  margin-bottom : 10px;" class="form-control" value=values ? values.password : '')
+                            input(type='password' name="password" style="margin-bottom : 10px;" class="form-control form-control-sm" value=values ? values.password : '')
                         .col-md-12
                             label(style="margin-right : 20px;  margin-bottom : 10px;") Confirm Password
-                            input(type='password' name="re_password" style="font-size : 20px;  margin-bottom : 10px;" class="form-control" value=values ? values.re-password : '')
+                            input(type='password' name="re_password" style="margin-bottom : 10px;" class="form-control form-control-sm" value=values ? values.re-password : '')
                 .col-xl-7.col-md-12.mb-2.information-area(style="border-left : 2px solid gray;")
                     .row
                         h4(style="text-align : center") Information
                         .col-md-6
                             label(style="margin-right : 20px;  margin-bottom : 10px;") First name
-                            input(type='text' name="firstname" style="font-size : 20px;  margin-bottom : 10px;" class="form-control" value=values ? values.firstname : '')
+                            input(type='text' name="firstname" style="margin-bottom : 10px;" class="form-control form-control-sm" value=values ? values.firstname : '')
                         .col-md-6
                             label(style="margin-right : 20px;  margin-bottom : 10px;") Last name
-                            input(type='text' name="lastname" style="font-size : 20px;  margin-bottom : 10px;" class="form-control" value=values ? values.lastname : '')
+                            input(type='text' name="lastname" style="margin-bottom : 10px;" class="form-control form-control-sm" value=values ? values.lastname : '')
                     .row
                         .col-md-12
                             label(style="margin-right : 20px;  margin-bottom : 10px;") Address
-                            input(type='text' name="address" style="font-size : 20px;  margin-bottom : 10px;" class="form-control"  value=values ? values.address : '')
+                            input(type='text' name="address" style="margin-bottom : 10px;" class="form-control form-control-sm"  value=values ? values.address : '')
                     -if (cityList) {
                         .row
                             .col-md-12
                                 label.mb-1(for="city") City
-                                select.form-select(id="city" name="city")
+                                select.form-select.form-select-sm(id="city" name="city")
                                     -if (currentUser) {
                                         option(value=currentUser.city)= currentUser.city
                                     -} 
@@ -50,11 +50,11 @@ block formRegister
                             label(style="margin-right : 20px;  margin-bottom : 10px;") Phone number
                             .d-flex
                                 h5(style="margin-right : 10px; padding-top : 7px") +84
-                                input(type="text" name="phone"  style="font-size : 20px;  margin-bottom : 10px;" class="form-control")
+                                input(type="text" name="phone"  style="margin-bottom : 10px;" class="form-control form-control-sm")
                     .row
                         .col-md-12
                             label(style="margin-right : 20px;  margin-bottom : 5px;") Company
-                            input(type='text' name="company" style="font-size : 20px;  margin-bottom : 10px;" class="form-control" value=values ? values.company : '')
+                            input(type='text' name="company" style="margin-bottom : 10px;" class="form-control form-control-sm" value=values ? values.company : '')
                 hr
                 .container.d-flex.justify-content-center(id='submitArea')
                     button.btn.btn-dark(style='width : 30%; margin : auto;') Submit

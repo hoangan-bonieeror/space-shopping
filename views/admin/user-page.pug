@@ -30,7 +30,7 @@ block userPage
                         th(scope='col') Phone
                         th(scope='col') Email
                         th(scope='col' style="width : 15%; text-align: center") Action
-                tbody(style='width : 100% ; max-height: 600px ; display:block ; overflow-y:scroll ;')
+                tbody(style='width : 100% ; max-height: 450px ; display:block ; overflow-y:auto ;')
                     each user in users
                         tr(style="display : table; width : 100% ;  max-height: 70px ; table-layout : fixed")
                             th(id='id' style="width : 5%; text-align: center")= user.id

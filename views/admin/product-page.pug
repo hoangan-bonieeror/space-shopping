@@ -11,7 +11,7 @@ block productPage
     .row.mb-2
         .col-md-12
             h5.d-inline Product
-            a.mb-1.btn.btn-outline-dark(href="#" style="margin-left : 1rem;") New Product
+            a.mb-1.btn.btn-outline-dark(href="/admin/product/create" style="margin-left : 1rem;") New Product
             form.d-inline(action="/admin/product" method="GET")
                 .input-group(id='searchArea' )
                     input.form-control(name="key" type="text" placeholder='Enter the product...' aria-describedby='searchBtn' id='inputSearch' onMouseOver="this.style.border : '3px'" onMouseOut="this.style.border : '1px'" value=(key) ? key : '')
@@ -25,16 +25,19 @@ block productPage
             table.table.table-hover.align-middle(id='product_tbl')
                 thead
                     tr(style="display : table; width : 98.6% ; table-layout : fixed")
+                        th(scope='col' style="width : 5%") #
                         th(scope='col' style="width : 5%") ID
                         th(scope='col' style="width : 15% ; text-align : center") Image
                         th(scope='col' style="width : 40%") Name
                         th(scope='col' style='width : 5% ;text-align : center') Quantity
                         th(scope='col' style='text-align : center') Status
                         th(scope='col')
-                tbody(style='width : 100% ; max-height: 600px ; display:block ; overflow-y:scroll ;')
+                tbody(style='width : 100% ; max-height: 450px ; display:block ; overflow-y: auto ;')
                     if products
                         each product in products
                             tr(style="display : table; width : 100% ; table-layout : fixed")
+                                th(scope='row' style="width : 5%")
+                                    input.form-check-input(type="checkbox")
                                 th(id='id' scope='row' style="width : 5%")= product.id
                                 td(id="image1" style="width : 15%; text-align : center")
                                     img(src=product.image1 )

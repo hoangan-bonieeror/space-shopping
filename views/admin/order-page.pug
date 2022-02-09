@@ -32,7 +32,7 @@ block orderPage
                         th(scope='col') Status
                         th(scope='col') Total Price
                         th(scope='col')
-                tbody(style='width : 100% ; max-height: 600px ; display:block ; overflow-y:scroll ;')
+                tbody(style='width : 100% ; max-height: 450px ; display:block ; overflow-y: auto ;')
                     if orders
                         each order in orders 
                             tr(style="display : table; width : 100% ; table-layout : fixed")

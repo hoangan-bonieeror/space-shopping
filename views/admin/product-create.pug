@@ -3,4 +3,59 @@ extends ./sidebar.pug
 block productCreate
     .row.mb-3
         .col-md-12
-            form
+            nav(aria-label='breadcrumb')
+                ol.breadcrumb
+                    li.breadcrumb-item
+                        a(href='#') Admin
+                    li.breadcrumb-item
+                        a(href='/admin/product') Product
+                    li.breadcrumb-item.active(aria-current='page') Create
+    h3(style="text-align : center") Form create
+    .row.mb-3.justify-content-center
+        .col-md-8
+            form(action="/admin/product/create" method="POST" enctype="multipart/form-data")
+                .mb-2
+                    label.form-label(for="nameProduct") Name
+                    input.form-control.form-control-sm#nameProduct(type="text" name="name")
+                label.form-label Price
+                .mb-2.input-group.input-group-sm
+                    span.input-group-text $
+                    input.form-control.form-control-sm#priceProduct(type="text" name="price")
+                    span.input-group-text .00
+                .mb-2
+                    .d-flex
+                        .input-group.input-group-sm(style="margin-right : 10px")
+                            span.input-group-text Brand
+                            select.form-select.form-select-sm#brand(name="id_brand")
+                                option(selected) Choose...
+                                each brand in brands
+                                    option(value=brand.id)= brand.name
+                        .input-group.input-group-sm
+                            span.input-group-text Category
+                            select.form-select.form-select-sm#category(name="id_category")
+                                option(selected) Choose...
+                                each category in categories
+                                    option(value=category.id)= category.name
+                .mb-2
+                    label.form-label(for="imageProduct") Images (Require 5 images)
+                    input.form-control.form-control-sm(
+                        type="file"
+                        name="images"
+                        id="images"
+                        multiple
+                        accept="image/jpeg, image/jpg, image/png"
+                        onchange="readURL(this)"
+                    )
+                    .preview-image-product.d-flex.mt-2#preview-image-product(style="overflow-x : auto")
+                .mb-2
+                    label.form-label(for="desProduct") Description
+                    textarea#desProduct.form-control.form-control-sm(name="description", rows="4") 
+                button.btn.btn-dark(
+                    type="submit"
+                    style="width : 100%"
+                    onmouseover='this.style.backgroundColor="white"; this.style.color="black"'
+                    onmouseout='this.style.backgroundColor="black"; this.style.color="white"'
+                    )
+                    | Submit
+                             
+                
