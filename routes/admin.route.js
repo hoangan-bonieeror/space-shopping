@@ -11,5 +11,6 @@ router.get('/order', controller.viewOrderPage)
 router.get('/user', controller.viewUserPage)
 router.get('/product/create', controller.viewCreateProduct)
 router.post('/product/create', upload ,controller.postProduct)
+router.post('/product/update/:id', controller.putProduct)
 
 module.exports = router;

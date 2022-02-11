@@ -148,10 +148,18 @@ module.exports.viewProductPage = async (req,res) => {
                 }
             })
         let products = await data.json()
+
+        const dataBrand = await fetch(process.env.ROOT_API_PATH + 'customer/brand', {method : 'GET'})
+        let brands = await dataBrand.json()
+
+        const dataCategory = await fetch(process.env.ROOT_API_PATH + 'customer/category', {method : 'GET'})
+        let categories = await dataCategory.json()
         
         return res.render('admin/product-page',{
             products : products.data,
-            key : key ? key : ''
+            key : key ? key : '',
+            categories : categories.data,
+            brands : brands.data
         })
     } catch(err) {
         console.log(err)
@@ -287,6 +295,39 @@ module.exports.postProduct = async (req,res) => {
 
         return res.redirect('/admin/product')
     } catch(err) {
+        console.log(err)
+    }
+}
+
+module.exports.putProduct = async (req,res) => {
+    try {
+        const productInput = {
+            name,
+            price,
+            id_brand,
+            id_category
+        } = req.body
+        
+        productInput['id_brand'] = parseInt(productInput['id_brand'])
+        productInput['id_category'] = parseInt(productInput['id_category'])
+
+        let api_path = process.env.ROOT_API_PATH + `product/update/${req.params.id}`
+
+        let data = await fetch(api_path, {
+            method : 'PUT',
+            body : JSON.stringify(productInput),
+            headers : {
+                'Content-Type' : 'application/json',
+                'token' : req.cookies.token
+            }
+        }) 
+
+        let response = await data.json()
+
+        console.log(response)
+
+        return res.redirect('back')
+    } catch (err) {
         console.log(err)
     }
 }
