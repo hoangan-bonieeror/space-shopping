@@ -168,7 +168,7 @@ module.exports.viewProductPage = async (req,res) => {
 
 module.exports.viewOrderPage = async (req,res) => {
     try {
-        let api_path = process.env.ROOT_API_PATH + `cart/filter/${req.query.status}`
+        let api_path = `${process.env.ROOT_API_PATH}cart/filter/${req.query.status}`
 
         let { email } = req.query
 
@@ -233,7 +233,7 @@ module.exports.viewOrderPage = async (req,res) => {
         return res.render('admin/order-page',{
             orders : orders.data,
             users : users.listUsers,
-            filterResult : (key || (!key && email === 'empty'  && parseInt(req.query.status) === 6)) ? null : {
+            filterResult : (key || (!key && (email === 'empty' || email === undefined)  && parseInt(req.query.status) === 6)) ? null : {
                 email : email,
                 status : (status) ? status : '' 
             },
