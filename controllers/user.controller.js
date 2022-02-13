@@ -168,35 +168,76 @@ module.exports.viewProductPage = async (req,res) => {
 
 module.exports.viewOrderPage = async (req,res) => {
     try {
-        let api_path = process.env.ROOT_API_PATH + 'cart/filter/'
+        let api_path = process.env.ROOT_API_PATH + `cart/filter/${req.query.status}`
 
-        let statusInput = 6
+        let { email } = req.query
 
-        api_path += statusInput
+        api_path += `?email=${(!email || email && email === 'empty') ? '' : email}` 
 
-        let email = ''
 
         if(req.query.key) {
-            email = req.query.key
+            api_path = process.env.ROOT_API_PATH + `cart/filter/${6}?email=${req.query.key}`
+            var key = req.query.key
         }
-
-        api_path += ('?email=' + email)
 
         let page = 1
 
         api_path += ('&page=' + page)
 
-        const data = await fetch(api_path,
+        // console.log(api_path)
+
+        const orderData = await fetch(api_path,
             {
                 method : 'GET',
                 headers : { 
                     'token' : req.cookies.token
                 }
             })
-        let orders = await data.json()
+        
+        let orders = await orderData.json()
+
+        const userData = await fetch(process.env.ROOT_API_PATH + 'user',
+            {
+                method : 'GET',
+                headers : { 
+                    'token' : req.cookies.token
+                }
+            })
+        let users = await userData.json()
+        users.listUsers = users.listUsers.filter(user => {
+            return user.isadmin === false
+        })
+
+        let status;
+        switch(parseInt(req.query.status)) {
+            case 1 : 
+                status = 'Pending'
+                break;
+            case 2 : 
+                status = 'Confirmed'
+                break;
+            case 3 : 
+                status = 'Delivering'
+                break;
+            case 4 : 
+                status = 'Delivered'
+                break;
+            case 5 : 
+                status = 'Cancel'
+                break;
+            case 6 : 
+                status = 'All'
+                break;
+        }
+        
         return res.render('admin/order-page',{
-            orders : orders.data
-            // key : key ? key : ''
+            orders : orders.data,
+            users : users.listUsers,
+            filterResult : (key || (!key && email === 'empty'  && parseInt(req.query.status) === 6)) ? null : {
+                email : email,
+                status : (status) ? status : '' 
+            },
+            key : key ? key : ''
         })
     } catch(err) {
         console.log(err)

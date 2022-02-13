@@ -10,7 +10,41 @@ block orderPage
                     li.breadcrumb-item.active(aria-current='page') Order
     .row.mb-2
         .col-md-12
-            h5.d-inline Order
+            h5.d-inline(style="vertical-align : middle; margin-right : 10px") Order
+            button.btn.btn-dark(
+                data-bs-toggle="offcanvas"
+                data-bs-target="#filterOrder"
+                onmouseover='this.style.backgroundColor="white"; this.style.color="black"'
+                onmouseout='this.style.backgroundColor="black"; this.style.color="white"')
+                | Filter
+            .offcanvas.offcanvas-start#filterOrder(style="z-index : 2000")
+                .offcanvas-header
+                    h1 Filter order 
+                    button.btn-close.text-reset(type="button" data-bs-dismiss="offcanvas" aria-label="Close")
+                .offcanvas-body
+                    form(action="/admin/order" method="GET")
+                        .input-group.input-group-sm.mb-3
+                            span.input-group-text Status
+                            select.form-select.form-select-sm#brand(name="status")
+                                option(value='6' selected) All
+                                option(value='1') Pending
+                                option(value='2') Confirm
+                                option(value='3') Delivering
+                                option(value='4') Delivered
+                                option(value='5') Cancel
+                        .input-group.input-group-sm.mb-3
+                            span.input-group-text Email
+                            select.form-select.form-select-sm(name="email") 
+                                option(selected value='empty') Choose...
+                                each user in users
+                                    option(value=user.email)= user.email
+                        button.btn.btn-dark(
+                            type="submit"
+                            style="width : 100%"
+                            onmouseover='this.style.backgroundColor="white"; this.style.color="black"'
+                            onmouseout='this.style.backgroundColor="black"; this.style.color="white"'
+                            )
+                            | Submit
             //- a.mb-1.btn.btn-outline-dark(href="#" style="margin-left : 1rem;") New Product
             form.d-inline(action="/admin/order" method="GET")
                 .input-group(id='searchArea' )
@@ -20,6 +54,12 @@ block orderPage
             if key
                 br
                 h5.mt-2(style="float : right; display : unset")= `Search result for the word : "${key}"` 
+        if filterResult
+            -var statusRes = `Status : "${filterResult.status}" `
+            -var emailRes = 'Email : '
+            -emailRes = (filterResult.email === 'empty') ? emailRes.concat('', '-') : emailRes.concat('' , `"${filterResult.email}"`)
+            -var stringRes = statusRes.concat('| ', emailRes)
+            b.mt-2= stringRes
     .row.mt-2
         .col-md-12
             table.table.table-hover.align-middle(id='order_tbl')
