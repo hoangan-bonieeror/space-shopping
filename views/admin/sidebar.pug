@@ -98,17 +98,28 @@ html
                                 use(xlink:href='#speedometer2')
                             |           Dashboard
                     li
-                        a.nav-link.text-white(href='/admin/order?status=6')
+                        a.nav-link.text-white(href='/admin/order?status=6'  class=(currentPage === 'order') ? 'activate' : 'deactivate')
                             svg.bi.me-2(width='16', height='16')
                                 use(xlink:href='#table')
                             |           Orders
                     li
-                        a.nav-link.text-white(href='/admin/product')
+                        a.nav-link.text-white(href='/admin/product' class=(currentPage === 'product') ? 'activate' : 'deactivate')
+                            svg.bi.me-2(width='16', height='16')
+                                use(xlink:href='#toggles2')
+                            |           Product
+                    li
+                        a.nav-link.text-white(href='/admin/brand' class=(currentPage === 'brand') ? 'activate' : 'deactivate')
+                            svg.bi.me-2(width='16', height='16')
+                                use(xlink:href='#collection')
+                            |           Brand
+                    li
+                        a.nav-link.text-white(href='/admin/category' class=(currentPage === 'category') ? 'activate' : 'deactivate')
                             svg.bi.me-2(width='16', height='16')
                                 use(xlink:href='#grid')
-                            |           Products
+                            |           Category
+                        
                     li
-                        a.nav-link.text-white(href='/admin/user')
+                        a.nav-link.text-white(href='/admin/user' class=(currentPage === 'user') ? 'activate' : 'deactivate')
                             svg.bi.me-2(width='16', height='16')
                                 use(xlink:href='#people-circle')
                             |           Users
@@ -124,10 +135,12 @@ html
                             hr.dropdown-divider
                         li
                             a.dropdown-item(href='/logout') Sign out
-            .container-fluid.mt-3(style="overflow-y : auto")
+            .container-fluid.pt-3(style="overflow-y : auto")#main-content
                 block productPage
                 block orderPage
                 block userPage
                 block productCreate
-                
+                block product-detail
+                block brandPage
+                block categoryPage
                             

@@ -1,0 +1,108 @@
+extends ./sidebar.pug
+
+block product-detail
+    .row
+        .col-md-12
+            .product-gallery
+                .carousel.slide(id=`carouselProduct-${product.id}` data-bs-ride="carousel")
+                    .carousel-inner
+                        .carousel-item.active
+                            img(src=product.image1)
+                        .carousel-item
+                            img(src=product.image2)
+                        .carousel-item
+                            img(src=product.image3)
+                        .carousel-item
+                            img(src=product.image4)
+                        .carousel-item
+                            img(src=product.image5)
+                    button.carousel-control-prev(role='button' data-bs-target=`#carouselProduct-${product.id}` data-bs-slide='prev'  style="left : -10px !important;")
+                        span.carousel-control-prev-icon(aria-hidden='true' style="background-color : black ; border-radius : 1.5rem; width : 60px; height : 10%;")
+                    button.carousel-control-next(role='button' data-bs-target=`#carouselProduct-${product.id}` data-bs-slide='next'  style="right : -10px !important")
+                        span.carousel-control-next-icon(aria-hidden='true' style="background-color : black ; border-radius : 1.5rem; width : 60px; height : 10%;")
+            br
+            .selection-product.mb-2
+                .carousel.slide(data-bs-ride="carouselProduct")
+                    .carousel-inner
+                        .carousel-item.active
+                            div(data-bs-target=`#carouselProduct-${product.id}` data-bs-slide-to="0")
+                                img(src=product.image1)
+                            div(data-bs-target=`#carouselProduct-${product.id}` data-bs-slide-to="1")
+                                img(src=product.image2)
+                            div(data-bs-target=`#carouselProduct-${product.id}` data-bs-slide-to="2")
+                                img(src=product.image3)
+                            div(data-bs-target=`#carouselProduct-${product.id}` data-bs-slide-to="3")   
+                                img(src=product.image4)
+                            div(data-bs-target=`#carouselProduct-${product.id}` data-bs-slide-to="4")
+                                img(src=product.image5)
+                        .carousel-item
+                            div(data-bs-target=`#carouselProduct-${product.id}` data-bs-slide-to="0")
+                                img(src=product.image1)
+                            div(data-bs-target=`#carouselProduct-${product.id}` data-bs-slide-to="1")
+                                img(src=product.image2)
+                            div(data-bs-target=`#carouselProduct-${product.id}` data-bs-slide-to="2")
+                                img(src=product.image3)
+                            div(data-bs-target=`#carouselProduct-${product.id}` data-bs-slide-to="3")   
+                                img(src=product.image4)
+                            div(data-bs-target=`#carouselProduct-${product.id}` data-bs-slide-to="4")
+                                img(src=product.image5)
+                    //- button.carousel-control-prev(role='button' data-bs-target=`#carouselProduct-${product.id}` data-bs-slide='prev' )
+                    //-     span.carousel-control-prev-icon(aria-hidden='true' style="background-color : black")
+                    //- button.carousel-control-next(role='button' data-bs-target=`#carouselProduct-${product.id}` data-bs-slide='next' )
+                    //-     span.carousel-control-next-icon(aria-hidden='true' style="background-color : black")       
+        hr                                                                                                                                                                                                    
+        .col-md-12
+            .d-flex
+                h4.mb-2
+                    b Information Product
+                .form-check.form-switch.mb-2(style="margin-left : .5rem; margin-top : 3px; border: 2px solid black; border-radius : 0.5rem ; height : 35px;")
+                    form#formActive(action="/product/active" method="POST" style="padding : 0 5px 0 5px")
+                        label(style="margin-top : 4px") Active
+                        if product.active
+                            input.form-check-input(type="checkbox" id=`activeProduct-${product.id}` name="active-check" checked onchange="this.parentElement.submit()")
+                        else
+                            input.form-check-input(type="checkbox" id=`activeProduct-${product.id}` name="active-check" onchange="this.parentElement.submit()")
+                        input(type="hidden" name="status" value=(product.active) ? 'disable' : 'enable')
+                        input(type="hidden" name="id_product" value=product.id)
+            form#updateProduct(action=`/admin/product/update/${product.id}` method="POST")
+                .mb-2.input-group.input-group-sm
+                    span.input-group-text Name
+                    input.form-control.form-control-sm(type="text" name="name" value=product.name)
+                .d-flex
+                    .mb-2.input-group.input-group-sm(style="margin-right : 10px")
+                        span.input-group-text Price
+                        input.form-control.form-control-sm(type="text" name="price" value=product.price)
+                        span.input-group-text $
+                    .mb-2.input-group.input-group-sm
+                        span.input-group-text Quantity
+                        input.form-control.form-control-sm(type="text" name="quantity" value=product.quantity width="50%")                                                                    
+                .d-flex.mb-2
+                    .input-group.input-group-sm(style="margin-right : 10px")
+                        span.input-group-text Brand
+                        select.form-select.form-select-sm#brand(name="id_brand")
+                            each brand in brands
+                                -if(product.brand.id_brand === brand.id) {
+                                    option(value=brand.id selected)= brand.name
+                                -} else {
+                                    option(value=brand.id)= brand.name
+                                -}
+                    .input-group.input-group-sm
+                        span.input-group-text Category
+                        select.form-select.form-select-sm#category(name="id_category")
+                            each category in categories
+                                -if(product.category.id_category === category.id) {
+                                    option(value=category.id selected)= category.name
+                                -} else {
+                                    option(value=category.id)= category.name
+                                -}
+                .mb-4
+                    label(for="desProduct" style="font-size : .875rem ;background-color : #e9ecef ; border-radius : 0.5rem 0.5rem 0 0; padding : .5rem") Description
+                    textarea#desProduct.form-control.form-control-sm(name="description", rows="6" style="border-radius : 0 .2rem .2rem .2rem !important")=product.description 
+                button.btn.btn-dark(
+                    type="submit"
+                    form="updateProduct"
+                    style="width : 100%"
+                    onmouseover='this.style.backgroundColor="white"; this.style.color="black"'
+                    onmouseout='this.style.backgroundColor="black"; this.style.color="white"'
+                    )
+                    | Submit

@@ -159,7 +159,8 @@ module.exports.viewProductPage = async (req,res) => {
             products : products.data,
             key : key ? key : '',
             categories : categories.data,
-            brands : brands.data
+            brands : brands.data,
+            currentPage : 'product'
         })
     } catch(err) {
         console.log(err)
@@ -237,6 +238,7 @@ module.exports.viewOrderPage = async (req,res) => {
                 email : email,
                 status : (status) ? status : '' 
             },
+            currentPage : 'order',
             key : key ? key : ''
         })
     } catch(err) {
@@ -264,7 +266,8 @@ module.exports.viewUserPage = async (req,res) => {
         
         
         return res.render('admin/user-page',{
-            users : users.listUsers
+            users : users.listUsers,
+            currentPage : 'user'
             // key : key ? key : ''
         })
     } catch(err) {
@@ -283,7 +286,8 @@ module.exports.viewCreateProduct = async (req,res) => {
 
         return res.render('admin/product-create' , {
             categories : categories.data,
-            brands : brands.data
+            brands : brands.data,
+            currentPage : 'product'
         })
     } catch (err) {
         console.log(err)
@@ -368,6 +372,73 @@ module.exports.putProduct = async (req,res) => {
         console.log(response)
 
         return res.redirect('back')
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+module.exports.viewDetailProduct = async (req,res) => {
+    try {
+        let { id_product } = req.params
+
+        let api_path = process.env.ROOT_API_PATH + `product/${id_product}`
+
+        let data = await fetch(api_path, {
+            method : 'GET',
+            headers : {
+                'Content-Type' : 'application/json',
+                'token' : req.cookies.token 
+            }
+        })
+
+        let response = await data.json()
+
+        const dataBrand = await fetch(process.env.ROOT_API_PATH + 'customer/brand', {method : 'GET'})
+        let brands = await dataBrand.json()
+
+        const dataCategory = await fetch(process.env.ROOT_API_PATH + 'customer/category', {method : 'GET'})
+        let categories = await dataCategory.json()
+
+        // console.log(response)
+        if(response.code === 200) {
+            return res.render('admin/detail-product', {
+                product : response.data,
+                categories : categories.data,
+                brands : brands.data
+            })
+        }
+    } catch(err) {
+        console.log(err)
+    }
+}
+
+module.exports.viewBrandPage = async (req,res) => {
+    try {
+        const dataBrand = await fetch(process.env.ROOT_API_PATH + 'customer/brand', {method : 'GET'})
+        let brands = await dataBrand.json()
+
+        if(brands.code === 200) {
+            return res.render('admin/brand-page', {
+                brands : brands.data,
+                currentPage : 'brand'
+            })
+        }
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+module.exports.viewCategoryPage = async (req,res) => {
+    try {
+        const datacategory = await fetch(process.env.ROOT_API_PATH + 'customer/category', {method : 'GET'})
+        let categories = await datacategory.json()
+
+        if(categories.code === 200) {
+            return res.render('admin/category-page', {
+                categories : categories.data,
+                currentPage : 'category'
+            })
+        }
     } catch (err) {
         console.log(err)
     }

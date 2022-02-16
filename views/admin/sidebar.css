@@ -17,6 +17,10 @@ body {
     overflow-x: auto;
     overflow-y: hidden;
   }
+  
+  a.nav-link {
+    margin-bottom: 5px;
+  }
   a.nav-link:hover {
     background-color: white;
     color: black !important;
@@ -94,27 +98,42 @@ body {
 
   ::-webkit-scrollbar-track
   {
-    -webkit-box-shadow : inset 0 0 6px rgba(0,0,0,0.3);
-    border-radius: 10px;
-    background-color: #F5F5F5;
+    /* -webkit-box-shadow : inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px; */
+    background-color: inherit !important;
   }
 
   ::-webkit-scrollbar
   {
-    width: 12px;
-    background-color: #F5F5F5;
+    height: 10px;
+    background-color: #F8F8F8;
   }
 
   ::-webkit-scrollbar-thumb
   {
     border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-    background-color: cyan;
+    -webkit-box-shadow: inset 0 0 6px #A9A9A9;
+    background-color: #A9A9A9;
   }
-  #searchArea {
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #D3D3D3;
+  } 
+  .dropdown-menu li a.dropdown-item:active {
+    background-color: white;
+    color: rgba(33,37,41);
+  }
+
+  #searchArea, #filterArea {
     width: 30%;
     float : right;
   }
+
+  #filterArea {
+    width: 5%;
+    height: 47px;
+    margin-left: 1rem;
+  }
+
   .product-gallery {
     height: 550px;
     margin-right : 1rem;
@@ -151,5 +170,65 @@ body {
     max-width: 100px;
     height : 60px;
     border-radius: 2rem;
+  }
+
+  
+  #link-detailProduct {
+    display: none;
+  }
+
+  a.activate {
+    background-color: white !important;
+    color: rgb(33,37,41) !important;
+  }
+
+
+  #formCreate-brand,
+  #brand_tbl,
+  #formCreate-category,
+  #category_tbl {
+    border: 2px solid black !important;
+    border-radius: .5rem !important;
+  }
+
+  #formCreate-brand,
+  #formCreate-category {
+    padding: 1rem;
+  }
+  
+
+  #brandInformation h4,
+  #categoryInformation h4  {
+    width: max-content;
+    transform: translate(-5px,25px);
+    background-color: white;
+    padding-right: 5px;
+  }
+
+  #brandInformation h4#table-title,
+  #categoryInformation h4#table-title {
+    transform: translate(-10px,25px) !important;
+  }
+
+  @media (max-width : 992px) {
+    table#product_tbl,
+    table#order_tbl {
+      overflow-x: auto;
+      width: 1000px;
+    }
+    #product_tbl td:not(#id, #checkbox-product),
+    #product_tbl th:not(#id, #checkbox-product),
+    #order_tbl td,
+    #order_tbl th {
+      width: unset !important;
+    }
+
+    a#link-detailProduct {
+      display: block;
+    }
+
+    button#button-detailProduct {
+      display: none;
+    }
   }
 

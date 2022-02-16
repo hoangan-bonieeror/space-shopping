@@ -2,16 +2,19 @@ extends ../layout/common.pug
 
 block formLogin
   div.justify-content-center.row.mt-5
-      div.col-xl-4.col-md-7
-        form.shadow-lg.bg-white(action="/login" method="POST" style="width:100%; border : 5px solid #f1f1f1; border-radius : 1rem ; padding : 1rem " id='formLogin')
-          h4.mb-2(style="text-align : center") Sign In
+      div.col-xl-5.col-md-7
+        form.shadow-lg.bg-white(action="/login" method="POST" style="width:100%; border : 5px solid #f1f1f1; border-radius : 1rem ; padding : 2rem " id='formLogin')
+          h4.mb-1.mt-2(style="text-align : center") LOGIN
           if error
             .alert.alert-danger= error
           .form-floating
             input.mb-4(type='text' id="email" name="email" value= email ? this.email : '' class="form-control form-control-sm" placeholder="Email" style="border : none ; border-bottom : 2px solid black ; outline : none ; background : transparent ; border-radius : unset")
             label(for="email" style="transition : .5s") Email
           .form-floating
-            input.mb-4(type='password' id="password" name="password" style="border : none ; border-bottom : 2px solid black ; outline : none ; background : transparent ; border-radius : unset" class="form-control form-control-sm" placeholder="Password")
+            input.mb-3(type='password' id="password" name="password" style="border : none ; border-bottom : 2px solid black ; outline : none ; background : transparent ; border-radius : unset" class="form-control form-control-sm" placeholder="Password")
             label(for="password" style="transition : .5s") Password
-          a.forgot-ps-link.mb-3(href="#" style="text-decoration : unset; float : right") Forgot your password ? 
-          button.btn.btn-dark(style="width : 100%") Sign In 
+          a.forgot-ps-link.mb-4(href="#" style="text-decoration : unset; float : right; font-size : 17px;  text-decoration : unset !important; color : black" onmouseover="this.style.color='#A9A9A9'" onmouseout="this.style.color='black'") Forgot your password ? 
+          button.btn.btn-dark.mb-4(style="width : 100%; border-radius : 2rem !important") Sign In 
+          #siginup-link(style="text-align : center; font-size : 17px;" )
+            p(style="margin-bottom : 0") Don't have an account ?
+            a(href="/user/register" style="text-decoration : unset !important; color : black" onmouseover="this.style.color='#A9A9A9'" onmouseout="this.style.color='black'") SIGN UP

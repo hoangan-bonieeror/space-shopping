@@ -12,6 +12,37 @@ block productPage
         .col-md-12
             h5.d-inline Product
             a.mb-1.btn.btn-outline-dark(href="/admin/product/create" style="margin-left : 1rem;") New Product
+            button.btn.btn-outline-dark.d-inline#filterArea(
+                data-bs-toggle="offcanvas"
+                data-bs-target="#filterProduct"
+                onmouseover='this.style.backgroundColor="black"; this.style.color="white"'
+                onmouseout='this.style.backgroundColor="white"; this.style.color="black"')
+                i.fas.fa-sliders-h
+            .offcanvas.offcanvas-end#filterProduct(style="z-index : 2000")
+                .offcanvas-header
+                    h2 Filter product 
+                    button.btn-close.text-reset(type="button" data-bs-dismiss="offcanvas" aria-label="Close")
+                .offcanvas-body
+                    form(action="" method="GET")
+                        .input-group.input-group-sm.mb-3
+                            span.input-group-text Brand
+                            select.form-select.form-select-sm#brand(name="id_brand")
+                                option(selected) Choose...
+                                each brand in brands
+                                    option(value=brand.id)= brand.name
+                        .input-group.input-group-sm.mb-3
+                            span.input-group-text Category
+                            select.form-select.form-select-sm(name="id_category") 
+                                option(selected) Choose...
+                                each category in categories
+                                    option(value=category.id)= category.name
+                        button.btn.btn-dark(
+                            type="submit"
+                            style="width : 100%"
+                            onmouseover='this.style.backgroundColor="white"; this.style.color="black"'
+                            onmouseout='this.style.backgroundColor="black"; this.style.color="white"'
+                            )
+                            | Submit
             form.d-inline(action="/admin/product" method="GET")
                 .input-group(id='searchArea' )
                     input.form-control(name="key" type="text" placeholder='Enter the product...' aria-describedby='searchBtn' id='inputSearch' onMouseOver="this.style.border : '3px'" onMouseOut="this.style.border : '1px'" value=(key) ? key : '')
@@ -25,27 +56,28 @@ block productPage
             table.table.table-hover.align-middle(id='product_tbl')
                 thead
                     tr(style="display : table; width : 98.6% ; table-layout : fixed")
-                        th(scope='col' style="width : 5%") #
-                        th(scope='col' style="width : 5%") ID
-                        th(scope='col' style="width : 15% ; text-align : center") Image
-                        th(scope='col' style="width : 40%") Name
-                        th(scope='col' style='width : 5% ;text-align : center') Quantity
-                        th(scope='col' style='text-align : center') Status
-                        th(scope='col')
-                tbody(style='width : 100% ; max-height: 450px ; display:block ; overflow-y: auto ;')
+                        th(scope='col' style="width : 5%" id="checkbox-product") #
+                        th(scope='col' style="width : 5%" id="id") ID
+                        th(scope='col' style="width : 10% ; text-align : center" id="image1") Image
+                        th(scope='col' style="width : 40%" id="name") Name
+                        th(scope='col' style='width : 10% ;text-align : center' id="quantity") Quantity
+                        th(scope='col' style='text-align : center' id="status") Status
+                        th(scope='col' style="width : 10%")
+                tbody(style='width : 100% ; max-height: 489px ; display:block ; overflow-y: auto ;')
                     if products
                         each product in products
                             tr(style="display : table; width : 100% ; table-layout : fixed")
-                                th(scope='row' style="width : 5%")
+                                th(id="checkbox-product" scope='row' style="width : 5%")
                                     input.form-check-input(type="checkbox")
                                 th(id='id' scope='row' style="width : 5%")= product.id
-                                td(id="image1" style="width : 15%; text-align : center")
+                                td(id="image1" style="width : 10%; text-align : center")
                                     img(src=product.image1 )
                                 td(id="name" style="width : 40%")= product.name
-                                td(id="quantity" style='width : 5% ; text-align : center')= product.quantity
+                                td(id="quantity" style='width : 10% ; text-align : center')= product.quantity
                                 td(id="status" style='text-align : center')= (product.active) ? 'Enabled' : 'Disabled'
-                                td.justify-content-center(style="padding-top : 3px")
-                                    button.btn.btn-outline-dark.mt-1(type="button" data-bs-toggle="modal" data-bs-target=`#${'detail' + product.id}`) Detail
+                                td.justify-content-center(style="padding-top : 3px ; width : 10%")
+                                    a.btn.btn-outline-dark#link-detailProduct(href=`/admin/product/${product.id}`) Detail
+                                    button.btn.btn-outline-dark.mt-1#button-detailProduct(type="button" data-bs-toggle="modal" data-bs-target=`#${'detail' + product.id}`) Detail
                                     .modal.fade(id=`${'detail' + product.id}` tabindex="-1" role="dialog"  aria-labelledby="labelUpdate" aria-hidden="true")
                                         .modal-dialog.modal-lg(style="max-width: 1350px!important;")
                                             .modal-content
