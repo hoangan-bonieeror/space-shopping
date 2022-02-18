@@ -17,3 +17,22 @@ const readURL = (input) => {
         }
       }
 }
+
+const enableBtn = (inputId) => {
+    let inputElement = document.getElementById(inputId)
+
+    let [general, number] = inputId.split('-')
+
+    console.log(inputElement,number)
+    let btnElement = document.getElementById(`btnUpdate-${number}`)
+    console.log(btnElement)
+    return btnElement.disabled = false
+}
+
+window.onload = (e) => {
+    const searchURL = window.location.href
+
+    if(searchURL.includes('search')) {
+        document.getElementsByClassName('body-page')[0].style.transform = "translateY(-1rem)";
+    }
+}

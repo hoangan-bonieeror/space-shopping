@@ -8,23 +8,24 @@ block brandPage
                     li.breadcrumb-item
                         a(href='#') Admin
                     li.breadcrumb-item.active(aria-current='page') Brand
-    .row.mb-2
+    .row
         .col-md-12
             h3.d-inline Brand
-            form.d-inline(action="#" method="GET")
+            form.d-inline(action="/admin/brand/search" method="GET")
                 .input-group(id='searchArea' )
                     input.form-control(name="key" type="text" placeholder='Enter the brand...' aria-describedby='searchBtn' id='inputSearch' onMouseOver="this.style.border : '3px'" onMouseOut="this.style.border : '1px'" value=(key) ? key : '')
                     .input-group-append
                         button.btn.btn-outline-dark(type='submit' id='searchBtn') Search
+    .row
+        .col-md-12
             if key
-                br
                 h5.mt-2(style="float : right; display : unset")= `Search result for the word : "${key}"` 
-    .row.mt-2#brandInformation
+    .row.body-page#brandInformation
         .col-md-4
             h4.mb-2 New
-            form(action="#" method="")#formCreate-brand
+            form(action="/admin/brand/add" method="POST")#formCreate-brand
                 .mb-2.form-floating
-                    input.form-control.form-control-sm#nameBrand(type="text" name="name_brand" placeholder="Name")
+                    input.form-control.form-control-sm#nameBrand(type="text" name="name" placeholder="Name")
                     label(for="nameBrand") Name
                 button.btn.btn-outline-dark.btn-sm(
                     type="submit"
@@ -42,7 +43,7 @@ block brandPage
                         th(scope='col' id="id" style="width : 100px") ID
                         th(scope='col' id="name") Name
                         th(scope='col' style="width : 200px") Action
-                tbody(style='width : 100% ; max-height: 489px ; display:block ; overflow-y: auto ;')
+                tbody(style='width : 100% ; max-height: 474px ; display:block ; overflow-y: auto ;')
                     if brands
                         each brand in brands
                             tr(style="display : table; width : 100% ; table-layout : fixed; text-align : center")
@@ -50,14 +51,22 @@ block brandPage
                                 //-     input.form-check-input(type="checkbox")
                                 th(id='id' scope='row' style="width : 100px")= brand.id
                                 td(id="name" scope='row')
-                                    form(action="#" method="GET" style="margin-bottom : unset !important")
+                                    form(action=`/admin/brand/update/${brand.id}` method="POST" style="margin-bottom : unset !important")
                                         .input-group.input-group-sm
-                                            input.form-control(type="text" value=brand.name)
+                                            input.form-control(
+                                                type="text"
+                                                id=`inputUpdate-${brand.id}`
+                                                name="name_brand" 
+                                                value=brand.name
+                                                onchange=`enableBtn('inputUpdate-${brand.id}');`
+                                                )
                                             button.btn.btn-outline-dark(
                                                 type="submit"
                                                 onmouseover='this.style.backgroundColor="black"; this.style.color="white"'
-                                                onmouseout='this.style.backgroundColor="white"; this.style.color="black"'
+                                                onmouseout='this.style.backgroundColor="white"; this.style.color="black"',
+                                                id=`btnUpdate-${brand.id}`
+                                                disabled
                                                 )
                                                 | Submit to edit
                                 td(scope='row' style="width : 200px")
-                                    button.btn.btn-outline-dark.btn-sm(type="button") Delete
+                                    a.btn.btn-outline-dark.btn-sm(href=`/admin/brand/delete/${brand.id}`) Delete

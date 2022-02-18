@@ -167,6 +167,65 @@ module.exports.viewProductPage = async (req,res) => {
     }
 }
 
+module.exports.filterProduct = async (req,res) => {
+    try {
+        const {
+            id_category,
+            id_brand
+        } = req.query
+
+        let api_path = process.env.ROOT_API_PATH + 'customer/product'
+
+        let arrKey = []
+        if(id_brand && id_brand != 0) {
+            arrKey.push(`brandId=${id_brand}`) 
+        }
+
+        if(id_category && id_category != 0) {
+            arrKey.push(`categoryId=${id_category}`) 
+        }
+
+        let keyString = '?'
+
+        keyString += arrKey.join('&')
+
+        api_path += keyString
+
+        console.log(api_path)
+        let response = await fetch(api_path, {
+            method : 'GET'
+        })
+
+        let data = await response.json()
+
+        if(data.code === 200) {
+            const dataBrand = await fetch(process.env.ROOT_API_PATH + 'customer/brand', {method : 'GET'})
+            let brands = await dataBrand.json()
+    
+            const dataCategory = await fetch(process.env.ROOT_API_PATH + 'customer/category', {method : 'GET'})
+            let categories = await dataCategory.json()
+
+            return res.render('admin/product-page', {
+                products : data.data,
+                categories : categories.data,
+                brands : brands.data,
+                currentPage : 'product',
+                filterResult : {
+                    brand : brands.data.find(one => {
+                        return one.id == id_brand
+                    }),
+                    category :categories.data.find(one => {
+                        return one.id == id_category
+                    })
+                }
+            })
+        }
+
+    } catch(err) {
+        console.log(err)
+    }
+}
+
 module.exports.viewOrderPage = async (req,res) => {
     try {
         let api_path = `${process.env.ROOT_API_PATH}cart/filter/${req.query.status}`
@@ -428,6 +487,61 @@ module.exports.viewBrandPage = async (req,res) => {
     }
 }
 
+module.exports.postBrand = async (req,res) => {
+    try {
+        const body = {
+            name : name
+        } = req.body
+
+        const api_path = process.env.ROOT_API_PATH + 'brand/add'
+
+        let response = await fetch(api_path, {
+            method : 'POST',
+            body : JSON.stringify(body),
+            headers : {
+                'Content-Type' : 'application/json',
+                'token' : (req.cookies.token) ? req.cookies.token : '' 
+            }
+        })
+
+        let data = await response.json()
+        // console.log(data)
+        if(data.code === 200) {
+            return res.redirect('back')
+        }
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+module.exports.putBrand = async (req,res) => {
+    try {
+        const body = {
+            name_brand : name_brand
+        } = req.body
+
+        const { id } = req.params
+
+        const api_path = process.env.ROOT_API_PATH + `brand/update/${id}`
+        console.log(body)
+        const response = await fetch(api_path, {
+            method : 'PUT',
+            body : JSON.stringify(body),
+            headers : {
+                'Content-Type' : 'application/json',
+                'token' : (req.cookies.token) ? req.cookies.token : '' 
+            }
+        })
+
+        let data = await response.json()
+        console.log(data)
+        if(data.code === 200) {
+            return res.redirect('back')
+        }
+    } catch (err) {
+        console.log(err)
+    }
+}
 module.exports.viewCategoryPage = async (req,res) => {
     try {
         const datacategory = await fetch(process.env.ROOT_API_PATH + 'customer/category', {method : 'GET'})
@@ -439,6 +553,172 @@ module.exports.viewCategoryPage = async (req,res) => {
                 currentPage : 'category'
             })
         }
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+module.exports.postCategory = async (req,res) => {
+    try {
+        const body = {
+            name : name
+        } = req.body
+
+        const api_path = process.env.ROOT_API_PATH + 'category/add'
+
+        const response = await fetch(api_path, {
+            method : 'POST',
+            body : JSON.stringify(body),
+            headers : {
+                'Content-Type' : 'application/json',
+                'token' : (req.cookies.token) ? req.cookies.token : '' 
+            }
+        })
+
+        let data = await response.json()
+        // console.log(data)
+        if(data.code === 200) {
+            return res.redirect('back')
+        }
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+module.exports.putCategory = async (req,res) => {
+    try {
+        const body = {
+            name_category : name_category
+        } = req.body
+
+        const { id } = req.params
+
+        const api_path = process.env.ROOT_API_PATH + `category/update/${id}`
+        
+        const response = await fetch(api_path, {
+            method : 'PUT',
+            body : JSON.stringify(body),
+            headers : {
+                'Content-Type' : 'application/json',
+                'token' : (req.cookies.token) ? req.cookies.token : '' 
+            }
+        })
+
+        let data = await response.json()
+        console.log(data)
+        if(data.code === 200) {
+            return res.redirect('back')
+        }
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+module.exports.searchBrand = async (req,res) => {
+    try {
+        const { key } = req.query
+
+        let api_path = process.env.ROOT_API_PATH + `brand?key=${key}`
+
+        const response = await fetch(api_path, {
+            method : 'GET',
+            headers : {
+                'token' : req.cookies.token
+            }
+        })
+
+        const data = await response.json()
+
+        if(data.code === 200) {
+            // console.log(data)
+            return res.render('admin/brand-page', {
+                brands : data.data,
+                key : data.queryWord,
+                currentPage : 'brand'
+            })
+        }
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+
+module.exports.searchCategory = async (req,res) => {
+    try {
+        const { key } = req.query
+
+        let api_path = process.env.ROOT_API_PATH + `category?key=${key}`
+
+        const response = await fetch(api_path, {
+            method : 'GET',
+            headers : {
+                'token' : req.cookies.token
+            }
+        })
+
+        const data = await response.json()
+
+        if(data.code === 200) {
+            // console.log(data)
+            return res.render('admin/category-page', {
+                categories : data.data,
+                key : data.queryWord,
+                currentPage : 'category'
+            })
+        }
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+
+module.exports.deleteBrand = async (req,res) => {
+    try {
+        let { id } = req.params
+
+        let api_path = process.env.ROOT_API_PATH + `brand/delete/${id}`
+
+        let response = await fetch(api_path, {
+            method : 'DELETE',
+            headers : {
+                'token' : req.cookies.token
+            }
+        })
+
+        let data = await response.json()
+
+        if(data.code === 200) {
+            return res.redirect('back')
+        } else {
+            return res.send(JSON.stringify(data))
+        }
+
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+module.exports.deleteCategory = async (req,res) => {
+    try {
+        let { id } = req.params
+
+        let api_path = process.env.ROOT_API_PATH + `category/delete/${id}`
+
+        let response = await fetch(api_path, {
+            method : 'DELETE',
+            headers : {
+                'token' : req.cookies.token
+            }
+        })
+        
+        let data = await response.json()
+        
+        if(data.code === 200) {
+            return res.redirect('back')
+        } else {
+            return res.send(JSON.stringify(data))
+        }
+
     } catch (err) {
         console.log(err)
     }

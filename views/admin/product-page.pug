@@ -23,17 +23,17 @@ block productPage
                     h2 Filter product 
                     button.btn-close.text-reset(type="button" data-bs-dismiss="offcanvas" aria-label="Close")
                 .offcanvas-body
-                    form(action="" method="GET")
+                    form(action="/admin/product/search" method="GET")
                         .input-group.input-group-sm.mb-3
                             span.input-group-text Brand
                             select.form-select.form-select-sm#brand(name="id_brand")
-                                option(selected) Choose...
+                                option(value=0 selected) Choose...
                                 each brand in brands
                                     option(value=brand.id)= brand.name
                         .input-group.input-group-sm.mb-3
                             span.input-group-text Category
                             select.form-select.form-select-sm(name="id_category") 
-                                option(selected) Choose...
+                                option(value=0 selected) Choose...
                                 each category in categories
                                     option(value=category.id)= category.name
                         button.btn.btn-dark(
@@ -51,6 +51,15 @@ block productPage
             if key
                 br
                 h5.mt-2(style="float : right; display : unset")= `Search result for the word : "${key}"` 
+            if filterResult
+                -var stringArr = []
+                -for(let [key, value] of  Object.entries(filterResult)) {
+                -   key = key.replace(key[0], key[0].toUpperCase())
+                -   stringArr.push(key + ' : ' + ((value === undefined) ? '-' : value.name))
+                -}
+                - var stringRes = stringArr.join(' | ')
+                br
+                h5.mt-1(style="float : right;")= `Filter result : (${stringRes})`
     .row.mt-2
         .col-md-12
             table.table.table-hover.align-middle(id='product_tbl')
@@ -64,7 +73,7 @@ block productPage
                         th(scope='col' style='text-align : center' id="status") Status
                         th(scope='col' style="width : 10%")
                 tbody(style='width : 100% ; max-height: 489px ; display:block ; overflow-y: auto ;')
-                    if products
+                    if (products.length !== 0)
                         each product in products
                             tr(style="display : table; width : 100% ; table-layout : fixed")
                                 th(id="checkbox-product" scope='row' style="width : 5%")
@@ -187,3 +196,6 @@ block productPage
                                                                         onmouseout='this.style.backgroundColor="black"; this.style.color="white"'
                                                                         )
                                                                         | Submit
+                    else
+                        tr(style="display : table; width : 100% ; table-layout : fixed")
+                            td(colspan="7" style="text-align : center") No product found the filter

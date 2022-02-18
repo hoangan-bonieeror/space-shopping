@@ -1,27 +1,27 @@
 body {
     font-family: 'Roboto';
 }
-.series::-webkit-scrollbar-track
+::-webkit-scrollbar-track
 {
     /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
     border-radius: 10px; */
     background-color: inherit !important;
 }
 
-.series::-webkit-scrollbar
+::-webkit-scrollbar
 {
     height: 10px;
     background-color: #F8F8F8;
 }
 
-.series::-webkit-scrollbar-thumb
+::-webkit-scrollbar-thumb
 {
     border-radius: 10px;
     -webkit-box-shadow: inset 0 0 6px #A9A9A9;
     background-color: #A9A9A9;
 }
 
-.series::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover {
     background-color: #D3D3D3;
 }
 .series {
@@ -226,6 +226,8 @@ nav li.signin-area:hover {
     width: 15%;
     z-index: 2000;
     display: none;
+    max-height: 600px;
+    overflow-y: auto;
 }
 
 #subnav-space .list-group {
@@ -249,6 +251,8 @@ nav li.signin-area:hover {
     box-shadow: 0 0 20px 2px #A9A9A9;
     background-color: white;
     z-index: 1000;
+    max-width: 2000px;
+    overflow-x: auto;
 }
 
 .tab-filter button#btn-brand-expanded {
