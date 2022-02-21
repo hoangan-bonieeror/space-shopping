@@ -1,0 +1,75 @@
+extends ./sidebar.pug
+
+block  userCreate
+    .row
+        .col-md-12
+            nav(aria-label='breadcrumb')
+                ol.breadcrumb
+                    li.breadcrumb-item
+                        a(href='#') Admin
+                    li.breadcrumb-item
+                        a(href='/admin/user') User
+                    li.breadcrumb-item.active(aria-current='page') Create
+    .row
+        .col-md-12
+            form#form-signup(action="/user/register" method="POST")
+                    if error
+                        .alert.alert-danger(style="margin : 1rem; margin-bottom : unset")= error
+                    div.container(style="padding : 1.5rem ;")
+                        .row
+                            .col-xl-5.col-md-12.mb-2.user-area
+                                .row
+                                    h4(style="text-align : center") Account
+                                    .col-md-12
+                                        label(style="margin-right : 20px;  margin-bottom : 10px;") Email
+                                        input(type='text' name="email" style="margin-bottom : 10px;" placeholder="example : nguyenvana@gmail.com" class="form-control form-control-sm" value=values ? values.email : '')
+                                    .col-md-12
+                                        label(style="margin-right : 20px;  margin-bottom : 10px;") Password
+                                        input(type='password' name="password" style="margin-bottom : 10px;" class="form-control form-control-sm" value=values ? values.password : '')
+                                    .col-md-12
+                                        label(style="margin-right : 20px;  margin-bottom : 10px;") Confirm Password
+                                        input(type='password' name="re_password" style="margin-bottom : 10px;" class="form-control form-control-sm" value=values ? values.re-password : '')
+                            .col-xl-7.col-md-12.mb-2.information-area(style="border-left : 1px solid #A9A9A9;")
+                                .row
+                                    h4(style="text-align : center") Information
+                                    .col-md-6
+                                        label(style="margin-right : 20px;  margin-bottom : 10px;") First name
+                                        input(type='text' name="firstname" style="margin-bottom : 10px;" class="form-control form-control-sm" value=values ? values.firstname : '')
+                                    .col-md-6
+                                        label(style="margin-right : 20px;  margin-bottom : 10px;") Last name
+                                        input(type='text' name="lastname" style="margin-bottom : 10px;" class="form-control form-control-sm" value=values ? values.lastname : '')
+                                .row
+                                    .col-md-12
+                                        label(style="margin-right : 20px;  margin-bottom : 10px;") Address
+                                        input(type='text' name="address" style="margin-bottom : 10px;" class="form-control form-control-sm"  value=values ? values.address : '')
+                                -if (cityList) {
+                                    .row.mb-2
+                                        .col-md-12
+                                            label.mb-1(for="city") City
+                                            select.form-select.form-select-sm(id="city" name="city")
+                                                -if (currentUser) {
+                                                    option(value=currentUser.city)= currentUser.city
+                                                -} 
+                                                -cityList.forEach(city => {
+                                                    option(value=city.name)= city.name
+
+                                                -})
+                                -}
+                                .row
+                                    .col-md-12
+                                        label(style="margin-right : 20px;  margin-bottom : 10px;") Phone number
+                                        .d-flex
+                                            h5(style="margin-right : 10px; padding-top : 7px") +84
+                                            input(type="text" name="phone"  style="margin-bottom : 10px;" class="form-control form-control-sm")
+                                .row
+                                    .col-md-12
+                                        label(style="margin-right : 20px;  margin-bottom : 5px;") Company
+                                        input(type='text' name="company" style="margin-bottom : 10px;" class="form-control form-control-sm" value=values ? values.company : '')
+                            hr
+                            #submitArea
+                                button.btn.btn-outline-dark(
+                                    style='width : 100%;'
+                                    onmouseover='this.style.backgroundColor="black"; this.style.color="white"'
+                                    onmouseout='this.style.backgroundColor="white"; this.style.color="black"'
+                                    )
+                                    | Submit

@@ -67,7 +67,15 @@ const filterProduct = async (req,res) => {
         return res.render('product/index',{
             products : (products.code === 200) ? products.data : [],
             brand : (brands.code === 200) ? brands.data : [],
-            category : (categories.code === 200) ? categories.data : []
+            category : (categories.code === 200) ? categories.data : [],
+            filterResult : {
+                brand : brands.data.find(one => {
+                    return one.id == req.query.id_brand
+                }),
+                category :categories.data.find(one => {
+                    return one.id == req.query.id_category
+                })
+            }
         })
     } catch (err) {
         console.log(err)

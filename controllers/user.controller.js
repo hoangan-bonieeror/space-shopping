@@ -3,6 +3,21 @@ require('dotenv').config()
 const FormData = require('form-data')
 const fs = require('fs')
 
+module.exports.viewCreateUser = async (req,res) => {
+    try {
+        let data = await fetch('https://provinces.open-api.vn/api/?depth=2', { method : 'GET' })
+
+        let response = await data.json()
+    
+        return res.render('admin/user-create', {
+            cityList : response,
+            currentPage : 'user'
+        })
+    } catch (err) {
+        console.log(err)
+    }
+}
+
 module.exports.viewMyAccount = async (req, res) => {
     let data = await fetch('https://provinces.open-api.vn/api/?depth=2', { method : 'GET' })
 
@@ -374,13 +389,15 @@ module.exports.postProduct = async (req,res) => {
                 body.append(key,value)
         }
 
-        fileImages.forEach(img => {
-            body.append('images', fs.createReadStream(img.path), {
-                filename : img.originalname,
-                filepath : img.path,
-                contentType : img.mimetype
-            })
-        });
+        if(fileImages) {
+            fileImages.forEach(img => {
+                body.append('images', fs.createReadStream(img.path), {
+                    filename : img.originalname,
+                    filepath : img.path,
+                    contentType : img.mimetype
+                })
+            });
+        }
 
         body.append('gender', 'male')
 
@@ -396,7 +413,10 @@ module.exports.postProduct = async (req,res) => {
         let response = await data.json()
 
         console.log(response)
-
+        if(response.code !== 200) {
+            res.app.locals.existMessage = response.message
+            return res.redirect('back')
+        }
         return res.redirect('/admin/product')
     } catch(err) {
         console.log(err)
@@ -506,9 +526,10 @@ module.exports.postBrand = async (req,res) => {
 
         let data = await response.json()
         // console.log(data)
-        if(data.code === 200) {
-            return res.redirect('back')
+        if(data.code === 400) {
+            res.app.locals.existMessage = data.message
         }
+        return res.redirect('back')
     } catch (err) {
         console.log(err)
     }
@@ -577,9 +598,10 @@ module.exports.postCategory = async (req,res) => {
 
         let data = await response.json()
         // console.log(data)
-        if(data.code === 200) {
-            return res.redirect('back')
+        if(data.code === 400) {
+            res.app.locals.existMessage = data.message
         }
+        return res.redirect('back')
     } catch (err) {
         console.log(err)
     }

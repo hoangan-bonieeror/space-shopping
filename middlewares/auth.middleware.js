@@ -89,3 +89,15 @@ module.exports.requireAuth_forAdmin = async function(req,res,next) {
 	}
 }
 
+module.exports.handleMessage = (req,res, next) => {
+	try {
+		if(req.app.locals.existMessage) {
+			res.locals.existMessage = req.app.locals.existMessage
+			delete res.app.locals['existMessage']
+		}
+		next()
+	} catch(err) {
+		console.log(err)
+	}
+}
+

@@ -11,7 +11,7 @@ block userPage
     .row.mb-2
         .col-md-12
             h5.d-inline User
-            a.mb-1.btn.btn-outline-dark(href="#" style="margin-left : 1rem;") New User
+            a.mb-1.btn.btn-outline-dark(href="/admin/user/create" style="margin-left : 1rem;") New User
             form.d-inline(action="/admin/user" method="GET")
                 .input-group(id='searchArea' )
                     input.form-control(name="key" type="text" placeholder='Enter the user...' aria-describedby='searchBtn' id='inputSearch' onMouseOver="this.style.border : '3px'" onMouseOut="this.style.border : '1px'" value=(key) ? key : '')

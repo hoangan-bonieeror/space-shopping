@@ -27,6 +27,8 @@ block categoryPage
                 .mb-2.form-floating
                     input.form-control.form-control-sm#namecategory(type="text" name="name" placeholder="Name")
                     label(for="namecategory") Name
+                if existMessage
+                    .alert.alert-danger= existMessage
                 button.btn.btn-outline-dark.btn-sm(
                     type="submit"
                     style="width : 100%"

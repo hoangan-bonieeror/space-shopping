@@ -1,61 +1,62 @@
 extends ../../layout/common.pug
 
 block myAccount
-    .row
-        nav.navbar.navbar-light.bg-light.nav-pills.flex-column(id="myaccount" style="border : 2 ; border-radius : 1rem; position : fixed ; top : 100px ; width : 17%; ")
-            a.navbar-brand(href="#" style="margin-right : unset") Account
-            nav.nav.flex-column(style="margin-bottom : 1rem")
-                .navbar-nav
-                    a.nav-link.active(href="/account/my/information" style="background-color : unset") Personal Information
-                    a.nav-link(href="/account/my/user") Change password
-                    a.nav-link(href=(currentUser) ? `/account/my/order/${currentUser.id}` : '/account/my/order') My order
-        .col-md-3
-        .col-md-9
-            form.pt-2(action='/account/update' method="POST" style="border : 2px solid grey; border-radius : 1rem ; ")
-                .container(style="padding : 1rem")
-                    .row.mb-2
-                        .col-md-7 
-                            label.mb-1 Email
-                            input(type='text' name="email" class="form-control" value=(currentUser) ? currentUser.email : '' disabled)
-                        .col.md-5
-                            p(style="margin-top : 2.1rem")=(currentUser) ? `Registered at : ${currentUser.createdAt}` : ''                   
-                    .row.mb-2
-                        .col-md-6
-                            label.mb-1 Firstname
-                            input(type='text' name="firstname" class="form-control" value=(currentUser && currentUser.firstname) ? currentUser.firstname : '')
-                        .col-md-6 
-                            label.mb-1 Lastname
-                            input(type="text" name="lastname" class="form-control" value=(currentUser && currentUser.lastname) ? currentUser.lastname : '')
-                    .row.mb-2
-                        .col-md-8
-                            label.mb-1 Address
-                            input(type='text' name="address" class="form-control" value=(currentUser && currentUser.address) ? currentUser.address : '')
-                        -if (cityList) {
-                                .col-md-4
-                                    label.mb-1(for="city") City
-                                    select.form-select(id="city" name="city")
-                                        -if (currentUser) {
-                                            option(value=currentUser.city)= currentUser.city
-                                        -} 
-                                        -cityList.forEach(city => {
-                                            -if(city.name !== currentUser.city) {
-                                                option(value=city.name)= city.name
-                                            -}
-                                        -})
-                        -}
-                    .row.mb-2
-                        .col-md-8
-                            label.mb-1 Phone
-                            input(type='text' name="mobile_number" class="form-control" value= (currentUser && currentUser.mobile_number) ? currentUser.mobile_number : '')
-                        .col-md-4
-                            label.mb-1 Company
-                            input(type='text' name="company" class="form-control" value=(currentUser && currentUser.company) ? currentUser.company : '')
-                    .row.mb-2
-                        .col-md-12
-                            label(for="comment").mb-1 Comment
-                            textarea.form-control(name="comment", id="comment" rows="4")= (currentUser && currentUser.comment) ? currentUser.comment : ''
-                    hr
-                    .row.mb-2.justify-content-center
-                        .col-md-3
-                            #submitArea
-                                button.btn.btn-dark(type="submit" style="width : 100%") Submit
+    div.mb-2.container(style="padding-top : 100px;")
+        .row
+            nav.navbar.navbar-light.bg-light.nav-pills.flex-column(id="myaccount" style="border : 2 ; border-radius : 1rem; position : fixed ; top : 100px ; width : 17%; ")
+                a.navbar-brand(href="#" style="margin-right : unset") Account
+                nav.nav.flex-column(style="margin-bottom : 1rem")
+                    .navbar-nav
+                        a.nav-link.active(href="/account/my/information" style="background-color : unset") Personal Information
+                        a.nav-link(href="/account/my/user") Change password
+                        a.nav-link(href=(currentUser) ? `/account/my/order/${currentUser.id}` : '/account/my/order') My order
+            .col-md-3
+            .col-md-9
+                form.pt-2(action='/account/update' method="POST" style="border : 2px solid grey; border-radius : 1rem ; ")
+                    .container(style="padding : 1rem")
+                        .row.mb-2
+                            .col-md-7 
+                                label.mb-1 Email
+                                input(type='text' name="email" class="form-control" value=(currentUser) ? currentUser.email : '' disabled)
+                            .col.md-5
+                                p(style="margin-top : 2.1rem")=(currentUser) ? `Registered at : ${currentUser.createdAt}` : ''                   
+                        .row.mb-2
+                            .col-md-6
+                                label.mb-1 Firstname
+                                input(type='text' name="firstname" class="form-control" value=(currentUser && currentUser.firstname) ? currentUser.firstname : '')
+                            .col-md-6 
+                                label.mb-1 Lastname
+                                input(type="text" name="lastname" class="form-control" value=(currentUser && currentUser.lastname) ? currentUser.lastname : '')
+                        .row.mb-2
+                            .col-md-8
+                                label.mb-1 Address
+                                input(type='text' name="address" class="form-control" value=(currentUser && currentUser.address) ? currentUser.address : '')
+                            -if (cityList) {
+                                    .col-md-4
+                                        label.mb-1(for="city") City
+                                        select.form-select(id="city" name="city")
+                                            -if (currentUser) {
+                                                option(value=currentUser.city)= currentUser.city
+                                            -} 
+                                            -cityList.forEach(city => {
+                                                -if(city.name !== currentUser.city) {
+                                                    option(value=city.name)= city.name
+                                                -}
+                                            -})
+                            -}
+                        .row.mb-2
+                            .col-md-8
+                                label.mb-1 Phone
+                                input(type='text' name="mobile_number" class="form-control" value= (currentUser && currentUser.mobile_number) ? currentUser.mobile_number : '')
+                            .col-md-4
+                                label.mb-1 Company
+                                input(type='text' name="company" class="form-control" value=(currentUser && currentUser.company) ? currentUser.company : '')
+                        .row.mb-2
+                            .col-md-12
+                                label(for="comment").mb-1 Comment
+                                textarea.form-control(name="comment", id="comment" rows="4")= (currentUser && currentUser.comment) ? currentUser.comment : ''
+                        hr
+                        .row.mb-2.justify-content-center
+                            .col-md-3
+                                #submitArea
+                                    button.btn.btn-dark(type="submit" style="width : 100%") Submit

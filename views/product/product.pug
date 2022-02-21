@@ -1,15 +1,15 @@
-.col-xl-3.col-md-6.col-sm-12.mb-3
+.col-xl-3.col-md-6.col-sm-12.mb-3.productItem
     .card.shadow-sm.product-item(name="product-item" id=`product-${product.id}`)
         img.card-img-top(src=product.image1 onclick=`window.location="/product/${product.id}"`)
         .card-body
-            p.card-title(style="")= product.name
+            p.card-title(style="text-align : center")= product.name
             - let price = product.price.toString() + '$'
-            p.card-text.mb-1= price 
+            p.card-text.mb-1(style="text-align : center")= price 
             div#addItem
                 form(action=`/cart/add-to-cart/${product.id}/${1}` method="POST")
                     input(type="hidden" name="name" value=product.name)
                     input(type="hidden" name="price" value=product.price)
-                    button.btn.btn-dark(id="add-to-cart" type="submit") Add to cart
+                    button.btn.btn-dark(id="add-to-cart" onclick="addToCart(this)" type="button") Add to cart
         button.btn.btn-dark.detailBtn(type="button" data-bs-toggle="modal" data-bs-target=`#${'detail' + product.id}`) Detail
 .modal.fade(id=`${'detail' + product.id}` tabindex="-1" role="dialog"  aria-labelledby="labelUpdate" aria-hidden="true")
     .modal-dialog.modal-lg(style="max-width: 1350px!important;")

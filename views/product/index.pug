@@ -1,19 +1,18 @@
 extends ../layout/common.pug
 
 block productPage
-    include ../layout/filter_subnav.pug
-    -if(message) {
+    -if(existMessage) {
         .alerts#alertWarning
             .alert.alert-warning.animated.bounceInRight
                 .icon.pull-left#icon
                     i.fa.fa-exclamation-circle.fa-2x
                 .copy
                     h4 Warning
-                    p= message
-                a.close
-                    i.fa.fa-times
+                    p= existMessage
+                //- a.close
+                //-     i.fa.fa-times
     -}
-    .container(style="margin-top : 40px")
+    .container(style="margin-top : 100px;")
         .row
             //- .col-xl-2#filter-sidebar
             //-     h3(style="text-align : center") Filter
@@ -51,16 +50,82 @@ block productPage
             //- //-             -}
             .col-md-12
                 .container-fluid
+                    .row
+                        .d-flex#filterBar
+                            a#filterLink(href=`#` data-bs-toggle="collapse" data-bs-target=`#filterArea`)
+                                p(style="font-size : 22px;") Filter
+                                    i.fas.fa-sliders-h(style="font-size : 18px; margin-left : 10px")
+                            form#searchForm(action="/product/all" method="GET")
+                                .input-group(style="padding : 1rem ; padding-bottom : unset; padding-left : unset")
+                                    button.btn(
+                                        type="button"
+                                        id='btn-searchProduct'
+                                        )
+                                        i.fas.fa-search
+                                    input(type='text' id='inputSearch' name="key"  placeholder ="What are you looking for ?"  value=key ? key : '' autocomplete="off")
+                            #sortArea(style="flex-grow : 5; color : white")
+                                select.form-select.form-select-sm.d-inline#sortSelect(
+                                    name="sortValue"
+                                    style=""
+                                    onchange="sortValue(this)")
+                                    option(value="") Newest 
+                                    option(value=0) Prices go up
+                                    option(value=1) Prices go down
+                                h5.d-inline(style="float : right; margin-bottom : unset; line-height : unset") Sort :
+                        .container-fluid.collapse(id=`filterArea`)
+                            form(action="/product/filter" method="GET")#formSearch
+                                .row
+                                    .col-md-5(style="color : white; border : 2px solid white; border-radius : .5rem 0 0 .5rem; background-color : rgb(0,0,0,.3)")
+                                        #categoryFilter(style="padding : 1rem")
+                                            h4 Category
+                                            each categoryItem in category
+                                                .input-group.input-group-sm
+                                                    if (filterResult && filterResult.category && categoryItem.id === filterResult.category.id) 
+                                                        input.form-check-input(type="checkbox" name="id_category" value=categoryItem.id checked)
+                                                    else 
+                                                        input.form-check-input(type="checkbox" name="id_category" value=categoryItem.id)
+                                                    label(for="" style="margin-left : .5rem")= categoryItem.name 
+                                    .col-md-6(style="color : white; border : 2px solid white; background-color : rgb(0,0,0,.3)")
+                                        #brandFilter(style="padding : 1rem")
+                                            h4 Brand
+                                            ul(style="max-height : 200px; display: -webkit-flex; display: flex; -webkit-flex-flow: column wrap; flex-flow: column wrap; list-style : none; padding-left : unset")
+                                                each brandItem in brand
+                                                    li
+                                                        .input-group.input-group-sm
+                                                            if (filterResult && filterResult.brand && brandItem.id === filterResult.brand.id) 
+                                                                input.form-check-input(type="checkbox" name="id_brand" value=brandItem.id checked)
+                                                            else 
+                                                                input.form-check-input(type="checkbox" name="id_brand" value=brandItem.id)
+                                                            label(for="" style="margin-left : .5rem")= brandItem.name                 
+                                    .col-md-1(style="padding-left : unset; padding-right : unset; border : 2px solid white; border-radius : 0 .5rem .5rem 0; ")
+                                        button.btn.btn-dark(
+                                            type="submit"
+                                            form="formSearch"
+                                            style="width : 100%; height : 100%; border-radius : 0 .5rem .5rem 0 !important; background-color : rgb(0,0,0,.3)!important "
+                                            onmouseover='this.style.backgroundColor="white"; this.style.color="black"'
+                                            onmouseout='this.style.backgroundColor="rgb(0,0,0,.3)"; this.style.color="white"')
+                                            i.fas.fa-arrow-right
+                                    
+                    hr
+                    if filterResult
+                        -var stringArr = []
+                        -for(let [key, value] of  Object.entries(filterResult)) {
+                        -   key = key.replace(key[0], key[0].toUpperCase())
+                        -   stringArr.push(key + ' : ' + ((value === undefined) ? '-' : value.name))
+                        -}
+                        - var stringRes = stringArr.join(' | ')
+                        .row.mb-2#rowResult(style="color : white")
+                            .col-md-12
+                                h5(style="")= `Filter result : (${stringRes})`
+                    if key
+                        .row.mb-2#rowResult(style="color : white")
+                            .col-md-12
+                                 h5= `Search result for the word : "${key}"` 
                     - if(products.length == 0) {
                         h5(style="padding-left : 1rem")= "There is no any product matched"
                     -} else {
-                        .row
-                            form(action="/product/all" method="GET")
-                                .input-group.mb-3(style="width : 100%; padding : 1rem ; padding-bottom : unset")
-                                    input(type='text' id='inputSearch' name="key"  placeholder ="Enter..." class="form-control" value=key ? key : '')
-                                    .input-group-append
-                                        button.btn.btn-outline-secondary(id='btn-searchProduct') Search
+                        .row#productList
                             -   products.forEach(product => {
                                     include product.pug
                             -   })
-                        -}
+                    -}

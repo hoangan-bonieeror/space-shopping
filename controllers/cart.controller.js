@@ -4,10 +4,6 @@ require('dotenv').config()
 
 module.exports.addToCart = (req,res) => {
     try {
-        if(res.locals.isLogin === false) {
-            res.app.locals.message = 'Required Account'
-            return res.redirect('/product/all')
-        }
         let { id_product, quantity } = req.params
 
         let { name , price } = req.body

@@ -24,5 +24,6 @@ router.get('/brand/delete/:id', controller.deleteBrand)
 router.post('/category/add', controller.postCategory)
 router.post('/category/update/:id', controller.putCategory)
 router.get('/category/delete/:id', controller.deleteCategory)
+router.get('/user/create', controller.viewCreateUser)
 
 module.exports = router;

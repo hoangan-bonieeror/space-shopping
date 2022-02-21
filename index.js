@@ -12,7 +12,7 @@ const productRoute = require('./routes/product.route')
 const accountRoute = require('./routes/user.route')
 const cartRoute = require('./routes/cart.route')
 const adminRoute = require('./routes/admin.route')
-const { requireAuth } = require('./middlewares/auth.middleware')
+const { requireAuth , handleMessage } = require('./middlewares/auth.middleware')
 
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser');
@@ -39,10 +39,10 @@ app.use('/assets', express.static(path.join(__dirname, 'assets')))
 
 app.use('/login', loginRoute)
 app.use('/user', registerRoute)
-app.use('/product', requireAuth, productRoute)
+app.use('/product', requireAuth, handleMessage , productRoute)
 app.use('/account', requireAuth, accountRoute)
 app.use('/cart', requireAuth, cartRoute)
-app.use('/admin', requireAuth , adminRoute)
+app.use('/admin', requireAuth , handleMessage ,adminRoute)
 app.use('/', logoutRoute)
 // GET POST PUT DELETE PATCH
 app.listen(process.env.PORT || 5000, () => console.log('Listening on port', process.env.PORT || 5000))
