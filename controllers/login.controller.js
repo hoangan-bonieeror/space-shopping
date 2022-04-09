@@ -79,7 +79,7 @@ module.exports.postLogin = async (req,res) => {
 			if(responseUser.data.isadmin) {
 				return res
 				.cookie('token', response.token)
-				.redirect('/admin/product')
+				.redirect('/admin/dashboard')
 			} else {
 				res.app.locals.users.push({
 					id : responseUser.data.id,
@@ -87,15 +87,15 @@ module.exports.postLogin = async (req,res) => {
 					quantity : 0
 				})
 
+				console.log(res.app.locals.users)
+
 				if(res.app.locals.message) {
 					res.app.locals.message = undefined
 				}
 
 				res
 				.cookie('token', response.token)
-				.cookie('id', responseUser.data.id, {
-					httpOnly : true
-				})
+				.cookie('id', responseUser.data.id)
 				.redirect('/')
 			}
 		}

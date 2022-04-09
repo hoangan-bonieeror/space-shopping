@@ -3,6 +3,16 @@ require('dotenv').config()
 const FormData = require('form-data')
 const fs = require('fs')
 
+module.exports.viewDashboardPage = (req,res) => {
+    try {
+        return res.render('admin/dashboard', {
+            currentPage : 'dashboard'
+        })
+    } catch(err) {
+        console.log(err)
+    }
+}
+
 module.exports.viewCreateUser = async (req,res) => {
     try {
         let data = await fetch('https://provinces.open-api.vn/api/?depth=2', { method : 'GET' })
@@ -49,10 +59,11 @@ module.exports.changePassword = async (req,res) => {
 
 
         let response = await data.json()
-        console.log(response)
-        if(response.code === 200) {
-            return res.redirect('/account/my/user')
-        } 
+        
+        if(response.code === 200 || response.code === 400) {
+            res.app.locals.existMessage = response.message
+            return res.redirect('back')
+        }
     } catch(err) {
         console.log(err)
     }
@@ -61,7 +72,7 @@ module.exports.changePassword = async (req,res) => {
 module.exports.viewMyOrder = async (req, res) => {
     let id_user = req.params.id
 
-    let data = await fetch(process.env.ROOT_API_PATH + `cart/getorderbyuser/${id_user}/6`, {
+    let data = await fetch(process.env.ROOT_API_PATH + `cart/getorderbyuser/${id_user}/${req.query.status}`, {
         method: 'GET',
         headers: { 'token': req.cookies.token }
     })
@@ -73,7 +84,8 @@ module.exports.viewMyOrder = async (req, res) => {
     })
 
     return res.render('login/customer/my-order', {
-        order: (response.code === 200) ? response.data : []
+        order: (response.code === 200) ? response.data : [],
+        numFilter : parseInt(req.query.status) 
     })
 }
 
@@ -744,4 +756,12 @@ module.exports.deleteCategory = async (req,res) => {
     } catch (err) {
         console.log(err)
     }
+}
+
+module.exports.viewShoppingCart = (req,res) => {
+    try {
+        return res.render('login/customer/cart')
+    } catch(err) {
+        console.log(err)
+    }  
 }

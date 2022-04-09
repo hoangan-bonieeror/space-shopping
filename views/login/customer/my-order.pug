@@ -1,33 +1,92 @@
 extends ../../layout/common.pug
 
 block myAccount
-    div.mb-2.container(style="padding-top : 100px;")
-        .row
-            nav.navbar.navbar-light.bg-light.nav-pills.flex-column(id="myaccount" style="border : 2 ; border-radius : 1rem; position : fixed ; top : 100px ; width : 17%; ")
-                a.navbar-brand(href="#" style="margin-right : unset") Account
-                nav.flex-column(style="margin-bottom : 1rem")
-                    .navbar-nav
-                        a.nav-link(href="/account/my/information") Personal Information
-                        a.nav-link(href="/account/my/user") Change password
-                        a.nav-link.active(href=(user) ? `/account/my/order/${user.id}` : '/account/my/order' style="background-color : unset") My order
+    div.mb-2.container(style="padding-top : 100px; font-size : 18px; letter-spacing : .5px")
+        nav.navbar.navbar-light(id="myaccount" style="border : 2 ; border-radius : 1rem;")
+            a.nav-link#personalTab(href="/account/my/information" ) 
+                i.fas.fa-user(style="margin-right : 10px")
+                | Personal Information
+            .line-devider
+            a.nav-link#changeTab(href="/account/my/user")
+                i.fas.fa-key(style="margin-right : 10px")
+                | Change password
+            .line-devider
+            a.nav-link.active#orderTab(href=(currentUser) ? `/account/my/order/${currentUser.id}?status=6` : '/account/my/order')
+                i.fas.fa-receipt(style="margin-right : 10px")
+                | Invoice
+        .row.mt-3
             .col-md-3
+                .tab-filter-order(style="")
+                    h4(style="text-align : center; letter-spacing : 2px") Status filter
+                    hr(style="border : 2px solid black; margin-bottom : 1rem !important; margin-top : .5rem !important")
+                    form#formFilterOrder(action=`/account/my/order/${currentUser.id}` method="GET" style="padding : 0 .5rem 0 .5rem")
+                        .input-group.input-group-sm
+                            -if(numFilter === 6) {
+                                input.form-check-input(type="checkbox" name="status" value=6 checked)
+                            -} else {
+                                input.form-check-input(type="checkbox" name="status" value=6)
+                            -}
+                            label(for="" style="margin-left : .5rem") All
+                        .input-group.input-group-sm
+                            -if(numFilter === 1) {
+                                input.form-check-input(type="checkbox" name="status" value=1 checked)
+                            -} else {
+                                input.form-check-input(type="checkbox" name="status" value=1)
+                            -}
+                            label(for="" style="margin-left : .5rem") Pending
+                        .input-group.input-group-sm
+                            -if(numFilter === 2) {
+                                input.form-check-input(type="checkbox" name="status" value=2 checked)
+                            -} else {
+                                input.form-check-input(type="checkbox" name="status" value=2)
+                            -}
+                            label(for="" style="margin-left : .5rem") Confirmed
+                        .input-group.input-group-sm
+                            -if(numFilter === 3) {
+                                input.form-check-input(type="checkbox" name="status" value=3 checked)
+                            -} else {
+                                input.form-check-input(type="checkbox" name="status" value=3)
+                            -}
+                            label(for="" style="margin-left : .5rem") Delivering
+                        .input-group.input-group-sm
+                            -if(numFilter === 4) {
+                                input.form-check-input(type="checkbox" name="status" value=4 checked)
+                            -} else {
+                                input.form-check-input(type="checkbox" name="status" value=4)
+                            -}
+                            label(for="" style="margin-left : .5rem") Delivered
+                        .input-group.input-group-sm
+                            -if(numFilter === 5) {
+                                input.form-check-input(type="checkbox" name="status" value=5 checked)
+                            -} else {
+                                input.form-check-input(type="checkbox" name="status" value=5)
+                            -}
+                            label(for="" style="margin-left : .5rem") Cancel
+                    button.btn.btn-dark(
+                        type="submit"
+                        form="formFilterOrder"
+                        style="width : 100%"
+                        onmouseover="this.style.backgroundColor='white'; this.style.color='black'"
+                        onmouseout="this.style.backgroundColor='black'; this.style.color='white'")
+                        i.fas.fa-arrow-right
             .col-md-9
-                form.pt-2(action="" style="border : 2px solid grey; border-radius : 1rem ; padding : 1rem ")
+                form.pt-2#order-form(action="" style="border : 2px solid grey; border-radius : 1rem ; padding : 0 1rem 0 1rem; ")
                     .table-responsive
-                        table.table.table-hover
+                        table.table.align-middle
+                            //- caption= `Total ${order.length} orders`
                             thead
-                                tr
-                                    th(scope='col') ID 
+                                tr(style="display : table; width : 98.6% ; table-layout : fixed;")
+                                    th(scope='col' style="width : 5%") ID 
                                     th(scope='col') Name
                                     th(scope='col') Phone
-                                    th(scope='col' style="text-align : center" ) Date | Time
+                                    th(scope='col' style="text-align : center" ) Date
                                     th(scope="col") Status
                                     th(scope='col') Total
                                     th(scope='col') 
-                            tbody
+                            tbody(style='width : 100% ; max-height: 400px ; display:block ; overflow-y: auto ;')
                                 -if(order && order.length === 0) {
-                                    tr
-                                        th(colspan=6)= "There is no order matched"
+                                    tr(style="display : table; width : 100%; table-layout : fixed;")
+                                        th(colspan='6')= "There is no order matched"
                                 -}
                                 each each in order
                                     include orderRow.pug

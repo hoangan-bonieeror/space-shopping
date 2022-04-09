@@ -13,6 +13,7 @@ const accountRoute = require('./routes/user.route')
 const cartRoute = require('./routes/cart.route')
 const adminRoute = require('./routes/admin.route')
 const { requireAuth , handleMessage } = require('./middlewares/auth.middleware')
+const apiCartRoute = require('./api/routes/cart.route')
 
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser');
@@ -36,6 +37,8 @@ app.use((req, res, next) => {
 
 const path = require('path')
 app.use('/assets', express.static(path.join(__dirname, 'assets')))
+
+app.use('/api', apiCartRoute)
 
 app.use('/login', loginRoute)
 app.use('/user', registerRoute)

@@ -232,3 +232,21 @@ body {
     }
   }
 
+
+#product-report,
+#order-report,
+#order-pending-report,
+#revenue-report {
+  overflow: hidden !important;
+  animation: slideIn .5s linear 0s forwards;
+}
+
+
+@keyframes slideIn {
+  from {
+    width: 30%;
+  }
+  to {
+    width: 100%;
+  }
+}

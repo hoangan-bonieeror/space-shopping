@@ -19,7 +19,7 @@ nav#navbar-space(class="navbar navbar-expand-lg navbar-light bg-light fixed-top"
                             i.fab.fa-blogger.fa-lg#icon(style="margin-left : 3px; margin-right : 15px")
                             ='Blog'
                         hr
-                    li.nav-item#product-tab
+                    li.nav-item#product-tab.product-tab
                         .nav-link
                             a(href="/product/all")
                                 i.fas.fa-tshirt.fa-lg#icon
@@ -28,35 +28,74 @@ nav#navbar-space(class="navbar navbar-expand-lg navbar-light bg-light fixed-top"
                             a#product-expand(href="#" data-bs-toggle="collapse" data-bs-target="#brandSpace") 
                                 i.fa.fa-fw.fa-caret-down#parent-expanded(style="vertical-align : center")
                         .collapse#brandSpace
-                        .sub-nav#subnav-space(style="")
                         hr
+                    .sub-nav#subnav-space(style="")
+                        .container-fluid(style="height : inherit !important;")
+                            .row(style="height : inherit !important;")
+                                .col-lg-2(style="height : inherit !important")
+                                    h3(style="position : absolute; top : 20%;")
+                                        img(src="../../assets/logo/space_logo.png" width="200" height="200")
+                                .col-lg-2(style="height : inherit !important; padding-top : 1rem; padding-bottom : 1rem; ")#subnav-brand
+                                    h3(style="font-weight : bold; letter-spacing : 1.5px") Brand
+                                    ul(style="list-style-type:none; padding-left : 0")
+                                .col-lg-2(style="height : inherit !important; padding-top : 1rem; padding-bottom : 1rem; ")#subnav-category
+                                    h3(style="font-weight : bold; letter-spacing : 1.5px") Category
+                                    ul(style="list-style-type:none; padding-left : 0")
+                                .col-lg-6(style="height : inherit !important; padding-top : 1rem;")
+                                    .poster(style="width : 100% ; height : 80%;")
+                                        .carousel.slide(data-bs-ride='carousel' data-interval="3000" style="width : 100% ; height")
+                                            .carousel-inner
+                                                .carousel-item.active(style="height : 100%; transition : transform .6s")
+                                                    img.d-block.w-100(src="../../assets/poster/4480029.jpg", alt='Poster 1' style="width: 100%; height : 100%; object-fit :cover")
+                                                .carousel-item(style="height : 100%; transition : transform .6s")
+                                                    img.d-block.w-100(src='../../assets/poster/4996365.jpg', alt='Second slide' style="width: 100%; height: 100%; object-fit: cover;")
+                                                .carousel-item(style="height : 100%; transition : transform .6s")
+                                                    img.d-block.w-100(src='../../assets/poster/5501964.jpg', alt='Third slide' style="width: 100%; height: 100%; object-fit: cover;")
                 ul.navbar-nav.ms-auto
                     -if(currentUser) {
                         li.nav-item.account-area
                             .d-flex 
-                                a.nav-link(id="icon-cart" href=(currentUser) ? "/account/my/checkout" : "/login" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Shopping cart" )
-                                    svg(style="" width="30px" height="30px" varia-hidden="true" focusable="false" data-prefix="fas" data-icon="cart-shopping" class="svg-inline--fa fa-cart-shopping" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512")
-                                        path(d="M96 0C107.5 0 117.4 8.19 119.6 19.51L121.1 32H541.8C562.1 32 578.3 52.25 572.6 72.66L518.6 264.7C514.7 278.5 502.1 288 487.8 288H170.7L179.9 336H488C501.3 336 512 346.7 512 360C512 373.3 501.3 384 488 384H159.1C148.5 384 138.6 375.8 136.4 364.5L76.14 48H24C10.75 48 0 37.25 0 24C0 10.75 10.75 0 24 0H96zM128 464C128 437.5 149.5 416 176 416C202.5 416 224 437.5 224 464C224 490.5 202.5 512 176 512C149.5 512 128 490.5 128 464zM512 464C512 490.5 490.5 512 464 512C437.5 512 416 490.5 416 464C416 437.5 437.5 416 464 416C490.5 416 512 437.5 512 464z")
-                                    - var quantity;
-                                    - if (users && currentUser) {
-                                    -   users.forEach(user => {
-                                    -       if(user.id === currentUser.id) {
-                                    -           quantity = user.quantity
-                                    -}
-                                    -})
-                                    -}
-                                        span.translate-middle.badge.rounded-pill.bg-danger(style="top : 15px; font-size : 12px")= quantity
+                                a.nav-link(
+                                    id="icon-cart"
+                                    href=(currentUser) ? "/account/my/cart" : "/login")
+                                    i.fas.fa-shopping-cart.fa-lg
+                                    span.translate-middle.badge.rounded-pill.bg-primary#totalNum(style="position : absolute; top : 26px; right : 158px ; font-size : 12px")= quantity
                                 .dropdown.nav-link#myAccount
                                     button.btn.btn-light.dropdown-toggle(style="padding : unset" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false")= (currentUser.lastname && currentUser.firstname) ? currentUser.lastname + ' ' + currentUser.firstname : currentUser.email
                                     ul.dropdown-menu(style="right : 0.35rem; top : 2.5rem ; left : unset" aria-labelledby="dropdownMenuButton")
                                         li
-                                            a.dropdown-item(href="/account/my/information" ) My Account
+                                            a.dropdown-item(href="/account/my/information" ) Account Information
                                         li
-                                            a.dropdown-item(href="/account/my/checkout") Checkout
+                                            a.dropdown-item(href="/account/my/user") Change Password
+                                        li
+                                            a.dropdown-item(href=`/account/my/order/${currentUser.id}?status=6`) Your Order
                                         .dropdown-divider
                                         li
                                             a.dropdown-item(href="/logout") Logout
                                                 i.fas.fa-sign-out-alt(style="margin-left : 4rem;")
+                                .cart#shopping-cart
+                                    .cart-header
+                                        .d-flex(style="justify-content : space-between; vertical-align : middle")
+                                            h4(style="text-transform : uppercase; letter-spacing : 2px") Shopping Cart
+                                            span(style="")
+                                                i.fas.fa-times
+                                    .cart-body.bodyCartMini
+                                        table.table.align-middle#cartTbl-mini
+                                        hr(style="color : #484848; border : 0")
+                                        p.d-inline(style="letter-spacing : 2px; font-weight : 600; margin-left : 5px") SUBTOTAL :
+                                        p.d-inline#totalCost(style="float : right; margin-right : 5px")
+                                    .cart-footer
+                                        .d-flex(style="justify-content : space-between; vertical-align : middle")
+                                            a.btn.btn-dark(
+                                                href="/account/my/cart"
+                                                onmouseover="this.style.backgroundColor='white'; this.style.color='black'"
+                                                onmouseout="this.style.backgroundColor='black'; this.style.color='white'")
+                                                | View Cart
+                                            a.btn.btn-dark(
+                                                href="/account/my/checkout"
+                                                onmouseover="this.style.backgroundColor='white'; this.style.color='black'"
+                                                onmouseout="this.style.backgroundColor='black'; this.style.color='white'")
+                                                | Checkout
                     -} else {
                         li.nav-item.signin-area
                             .d-flex

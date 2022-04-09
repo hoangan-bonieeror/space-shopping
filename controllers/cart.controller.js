@@ -6,7 +6,7 @@ module.exports.addToCart = (req,res) => {
     try {
         let { id_product, quantity } = req.params
 
-        let { name , price } = req.body
+        let { image, name , price } = req.body
         res.app.locals.users.forEach((user,index) => {
             if(user.id === parseInt(req.cookies.id)) {
                 if(user.cart.length === 0) {
@@ -14,6 +14,8 @@ module.exports.addToCart = (req,res) => {
                         id : id_product,
                         name : name,
                         qty : parseInt(quantity),
+                        price : price,
+                        image : image,
                         sub_total : parseInt(price) * parseInt(quantity)
                     })
                 } else {
@@ -31,6 +33,8 @@ module.exports.addToCart = (req,res) => {
                             id : id_product,
                             name : name,
                             qty : parseInt(quantity),
+                            price : price,
+                            image : image,
                             sub_total : parseInt(price) * parseInt(quantity)
                         })
                     }
@@ -51,6 +55,7 @@ module.exports.getInCheckout = (req,res,next) => {
         res.app.locals.users.forEach((user, index) => {
             if(user.id ===  res.locals.currentUser.id) {
                 res.locals.cart = res.app.locals.users[index].cart
+                res.locals.quantity = res.app.locals.users[index].quantity
             }
         })
         next()

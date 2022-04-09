@@ -1,62 +1,101 @@
 extends ../../layout/common.pug
 
 block myAccount
-    div.mb-2.container(style="padding-top : 100px;")
-        .row
-            nav.navbar.navbar-light.bg-light.nav-pills.flex-column(id="myaccount" style="border : 2 ; border-radius : 1rem; position : fixed ; top : 100px ; width : 17%; ")
-                a.navbar-brand(href="#" style="margin-right : unset") Account
-                nav.nav.flex-column(style="margin-bottom : 1rem")
-                    .navbar-nav
-                        a.nav-link.active(href="/account/my/information" style="background-color : unset") Personal Information
-                        a.nav-link(href="/account/my/user") Change password
-                        a.nav-link(href=(currentUser) ? `/account/my/order/${currentUser.id}` : '/account/my/order') My order
-            .col-md-3
-            .col-md-9
-                form.pt-2(action='/account/update' method="POST" style="border : 2px solid grey; border-radius : 1rem ; ")
-                    .container(style="padding : 1rem")
-                        .row.mb-2
-                            .col-md-7 
-                                label.mb-1 Email
-                                input(type='text' name="email" class="form-control" value=(currentUser) ? currentUser.email : '' disabled)
-                            .col.md-5
-                                p(style="margin-top : 2.1rem")=(currentUser) ? `Registered at : ${currentUser.createdAt}` : ''                   
-                        .row.mb-2
-                            .col-md-6
-                                label.mb-1 Firstname
-                                input(type='text' name="firstname" class="form-control" value=(currentUser && currentUser.firstname) ? currentUser.firstname : '')
-                            .col-md-6 
-                                label.mb-1 Lastname
-                                input(type="text" name="lastname" class="form-control" value=(currentUser && currentUser.lastname) ? currentUser.lastname : '')
-                        .row.mb-2
-                            .col-md-8
-                                label.mb-1 Address
-                                input(type='text' name="address" class="form-control" value=(currentUser && currentUser.address) ? currentUser.address : '')
-                            -if (cityList) {
-                                    .col-md-4
-                                        label.mb-1(for="city") City
-                                        select.form-select(id="city" name="city")
-                                            -if (currentUser) {
-                                                option(value=currentUser.city)= currentUser.city
-                                            -} 
-                                            -cityList.forEach(city => {
-                                                -if(city.name !== currentUser.city) {
-                                                    option(value=city.name)= city.name
-                                                -}
-                                            -})
-                            -}
-                        .row.mb-2
-                            .col-md-8
-                                label.mb-1 Phone
-                                input(type='text' name="mobile_number" class="form-control" value= (currentUser && currentUser.mobile_number) ? currentUser.mobile_number : '')
-                            .col-md-4
-                                label.mb-1 Company
-                                input(type='text' name="company" class="form-control" value=(currentUser && currentUser.company) ? currentUser.company : '')
-                        .row.mb-2
-                            .col-md-12
-                                label(for="comment").mb-1 Comment
-                                textarea.form-control(name="comment", id="comment" rows="4")= (currentUser && currentUser.comment) ? currentUser.comment : ''
-                        hr
-                        .row.mb-2.justify-content-center
-                            .col-md-3
-                                #submitArea
-                                    button.btn.btn-dark(type="submit" style="width : 100%") Submit
+    div.mb-2.container(style="padding-top : 100px; font-size : 18px; letter-spacing : .5px")
+        nav.navbar.navbar-light(id="myaccount" style="border : 2 ; border-radius : 1rem;")
+            a.nav-link.active#personalTab(href="/account/my/information") 
+                i.fas.fa-user(style="margin-right : 10px")
+                | Personal Information
+            .line-devider
+            a.nav-link#changeTab(href="/account/my/user")
+                i.fas.fa-key(style="margin-right : 10px")
+                | Change password
+            .line-devider
+            a.nav-link#orderTab(href=(currentUser) ? `/account/my/order/${currentUser.id}?status=6` : '/account/my/order')
+                i.fas.fa-receipt(style="margin-right : 10px")
+                | Invoice
+        .row.mt-3
+            form.pt-2#formEdit(action='/account/update' method="POST" style="color : white")
+                .container
+                    .row
+                        .col-md-5
+                            h5(style="color : #484848; text-transform : uppercase; letter-spacing : 3px ;font-weight : 600") Account information
+                            .row.mb-2(style="background-color : #484848; border-radius : .5rem; border : 4px solid white;")
+                                .col-md-12.mb-1(style="padding-top : .5rem")
+                                    p.d-inline(style="margin-bottom : unset;") Email :
+                                    input.d-inline.form-control.form-control-sm(
+                                        type='text'
+                                        name="email"
+                                        value=(currentUser) ? currentUser.email : ''
+                                        disabled 
+                                        style="background-color : transparent !important; border : 0; width : 80%; color : white")
+                                .col-md-12.mb-1
+                                    p.d-inline(style="margin-bottom : unset;") Firstname : 
+                                    input.form-control.form-control-sm.d-inline(
+                                        type='text'
+                                        name="firstname"
+                                        disabled
+                                        value=(currentUser && currentUser.firstname) ? currentUser.firstname : ''
+                                        style="background-color : transparent !important; border : 0; width : 70%; color : white")
+                                .col-md-12.mb-1
+                                    p.d-inline(style="margin-bottom : unset;") Lastname : 
+                                    input.form-control.form-control-sm.d-inline(
+                                        type='text'
+                                        name="lastname"
+                                        disabled
+                                        value=(currentUser && currentUser.lastname) ? currentUser.lastname : ''
+                                        style="background-color : transparent !important; border : 0; width : 70%; color : white")
+                                .col-md-12.mb-1
+                                    p.d-inline(style="margin-bottom : unset;") Phone : 
+                                    input.form-control.form-control-sm.d-inline(
+                                        type='text'
+                                        name="mobile_number"
+                                        disabled
+                                        value=(currentUser && currentUser.mobile_number) ? currentUser.mobile_number : ''
+                                        style="background-color : transparent !important; border : 0; width : 70%; color : white")
+                                .col-md-12.mb-1(style="padding-bottom : .5rem")
+                                    p.d-inline(style="margin-bottom : unset;") Company : 
+                                    input.form-control.form-control-sm.d-inline(
+                                        type='text'
+                                        name="company"
+                                        disabled
+                                        value=(currentUser && currentUser.company) ? currentUser.company : ''
+                                        style="background-color : transparent !important; border : 0; width : 70%; color : white")
+                        .col-md-7
+                            h5(style="color : #484848; margin-left : 1rem; text-transform : uppercase; letter-spacing : 3px; font-weight : 600") Accomodation
+                            .row.mb-2(style="margin-left : 1rem; border : 4px solid white; background-color : #484848; border-radius : .5rem;")
+                                .col-md-12.mb-1(style="padding-top : .5rem")
+                                    p.d-inline(style="margin-bottom : unset;") Address : 
+                                    input.form-control.form-control-sm.d-inline(
+                                        type='text'
+                                        name="address"
+                                        disabled
+                                        value=(currentUser && currentUser.address) ? currentUser.address : ''
+                                        style="background-color : transparent !important; border : 0; width : 80%; color : white")
+                                -if (cityList) {
+                                        .col-md-12.mb-1(style="padding-bottom : .5rem")
+                                            p.d-inline(style="margin-bottom : unset;") City : 
+                                            select.form-select.form-select-sm.d-inline(
+                                                id="city"
+                                                name="city"
+                                                disabled
+                                                style="background-color : transparent !important; border : 0; width : 70%; color : white")
+                                                -if (currentUser) {
+                                                    option(value=currentUser.city)= currentUser.city
+                                                -} 
+                                                -cityList.forEach(city => {
+                                                    -if(city.name !== currentUser.city) {
+                                                        option(value=city.name style="color : black")= city.name
+                                                    -}
+                                                -})
+                                -}
+                    .row.mb-2.justify-content-end#rowEdit
+                        .col-md-3
+                            .d-flex
+                                button.btn.btn-unedit(type="button" onclick="cancelEdit(this)") 
+                                    i.fas.fa-arrow-left
+                                button.btn.btn-edit#editSubmit(type="submit") Submit
+                            button.btn.btn-edit#enableEdit(type="button" onclick="clickToEdit(this)")
+                                | Edit
+                                i.fas.fa-edit
+                            

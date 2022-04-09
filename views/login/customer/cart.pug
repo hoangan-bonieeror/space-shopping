@@ -1,5 +1,77 @@
 extends ../../layout/common.pug
 
 block shoppingCart
-    .row
-        .col-md-12
+    .container(style="padding-top : 125px; margin-bottom : 50px")
+        .row(style="color : white")
+            .col-md-12
+                h2#cart-title(style="text-transform : uppercase; letter-spacing : 3px; margin-bottom : 1rem; font-weight : 550;")
+                 | Shopping Cart
+                 i.fas.fa-shopping-bag#icon-shopping-cart(style="")
+                hr#hr-divide(style="")
+        .row(style="color : white")
+            .col-md-8#cartCol
+                .shopping-cart(style="color : black; height : max-content")
+                    form(style="padding : 0 .5rem 0 .5rem;" action="#" method="GET")
+                        table.table.align-middle#cartTbl(style="")
+                            if cart
+                                each item in cart
+                                    tr(style="" id=`product-${item.id}`)
+                                        th(style="width : 20%")
+                                            img(
+                                                style="width: 100%; height: 100%; object-fit: cover; border-radius: .5rem;"
+                                                src=item.image)
+                                        td(style="width : 40%")
+                                            .product-infomation
+                                                h5= item.name
+                                                p= `#${item.id}`
+                                        td
+                                            input(
+                                                type="number"
+                                                id="quantity"
+                                                name="quantity"
+                                                min="0"
+                                                max="100"
+                                                step="1"
+                                                value=item.qty
+                                                onchange="updateQuantityItem(this)" 
+                                                style="height : 37px; transform : translateY(2.5px)")
+                                            button.btn.btn-outline-dark(
+                                                type="button" style="margin-left : 10px"
+                                                onclick="deleteItem(this)")
+                                                i.fas.fa-trash
+                                        td= `$${item.price}`
+            .col-md-4
+                .order-summary(style="background-color : white; color : black; padding : 1.5rem; border-radius : .5rem")
+                    h4.mb-3(style="text-transform : uppercase; letter-spacing : 3px;") Summary
+                    hr(style="color : black; border : 0")
+                    -var totalQty = 0
+                    -var totalCost = 0
+                    if cart
+                        each item in cart
+                            -totalQty += item.qty
+                            -totalCost += item.price * item.qty
+                    p.d-inline#totalQty= `Item x${totalQty}`
+                    p.d-inline#totalCost-noTax(style="float : right")= `$${totalCost}`
+                    br
+                    br
+                    p.d-inline Tax
+                    -var taxValue = 10
+                    p.d-inline(style="float : right") 10%
+                    hr.mt-2(style="color : black; border : 0; width : 100%")
+                    p.d-inline Total Cost
+                    p.d-inline#totalCost(style="float : right")= `$${(totalCost*taxValue)/100 + totalCost}`
+                    button.btn.btn-dark(
+                        type="button"
+                        style="width : 100%"
+                        onmouseover="this.style.backgroundColor='white'; this.style.color='black'"
+                        onmouseout="this.style.backgroundColor='black'; this.style.color='white'") Checkout
+        .row
+            .col-md-12
+                a(
+                    href="/product/all" 
+                    style="text-decoration : none; color : white; font-size : 20px; font-weight : 500; letter-spacing : 3px; text-transform : uppercase"
+                    onmouseover="this.style.textDecoration='underline'"
+                    onmouseout="this.style.textDecoration='none'"
+                ) 
+                    i.fas.fa-arrow-left(style="margin-right : 7px;")
+                    | Continue shopping 

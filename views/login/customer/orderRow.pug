@@ -1,8 +1,13 @@
-tr
-    th(id="id")= each.id
+tr(style="display : table; width : 100% ; table-layout : fixed;")
+    th(id="id" style="width : 5%")= each.id
     td(id="name")= each.firstname + ' ' + each.lastname
     td(id="phone")= each.numberphone
-    td(id="time" style="text-align : center")= each.createdAt.replace(',', ' | ')
+    -var dateObj = new Date(each.createdAt);
+    -var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    -var day = dateObj.getUTCDate();
+    -var year = dateObj.getUTCFullYear();
+    -var newDate = day + "/" + month + "/" + year;
+    td(id="time" style="text-align : center")= newDate
     td(id="status" style="text-transform : capitalize")= each.status
     td(id="total")= each.total_price + '$'
     td.justify-content-center(style="padding-top : 3px")

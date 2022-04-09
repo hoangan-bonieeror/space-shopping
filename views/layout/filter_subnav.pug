@@ -1,10 +1,18 @@
-.tab-filter
-    button.btn#btn-brand-expanded(type="button" data-bs-toggle="offcanvas" data-bs-target="#brand-expanded" aria-controls="offcanvas-space" )
-        i.fas.fa-bars
-        | Brand
-    ul.cd-filter#cd-filter
-        li.filter
-            a(href="/product/all") All
-        each brandItem in brand
-            li.filter
-                a(href=`/product/filter?id_brand=${brandItem.id}`)= brandItem.name
+.container-fluid
+    .row
+        .col-lg-2
+            h3(style="top : 200px") Space
+        .col-lg-5
+            h3 Brand
+        .col-lg-5
+            h3 Category
+//- .tab-filter
+//-     button.btn#btn-brand-expanded(type="button" data-bs-toggle="offcanvas" data-bs-target="#brand-expanded" aria-controls="offcanvas-space" )
+//-         i.fas.fa-bars
+//-         | Brand
+//-     ul.cd-filter#cd-filter
+//-         li.filter
+//-             a(href="/product/all") All
+//-         each brandItem in brand
+//-             li.filter
+//-                 a(href=`/product/filter?id_brand=${brandItem.id}`)= brandItem.name

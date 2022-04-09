@@ -6,6 +6,7 @@ const upload = require('../utils/upload')
 
 const router = express.Router()
 
+router.get('/dashboard', controller.viewDashboardPage)
 router.get('/product', controller.viewProductPage)
 router.get('/product/create', controller.viewCreateProduct)
 router.post('/product/create', upload ,controller.postProduct)
