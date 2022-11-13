@@ -1,4 +1,5 @@
 var prevScrollpos = window.pageYOffset;
+const baseUrl = window.location.protocol + '//' + window.location.hostname;
 window.onscroll = function() {
   var currentScrollPos = window.pageYOffset;
   if (prevScrollpos > currentScrollPos) {
@@ -25,13 +26,13 @@ function sortValue(sortSelect) {
       case '0' : 
         productList
           .sort((previous, next) => {
-            return parseInt(previous.children[0].children[1].children[1].innerHTML.slice(0,previous.children[0].children[1].children[1].innerHTML.length-1)) - parseInt(next.children[0].children[1].children[1].innerHTML.slice(0,next.children[0].children[1].children[1].innerHTML.length-1)) })
+            return parseInt(previous.children[0].children[1].children[1].innerHTML.slice(1,previous.children[0].children[1].children[1].innerHTML.length)) - parseInt(next.children[0].children[1].children[1].innerHTML.slice(1,next.children[0].children[1].children[1].innerHTML.length)) })
         break;
       case '1' :
         console.log(sortSelect.value);
         productList
           .sort((previous, next) => { 
-            return parseInt(next.children[0].children[1].children[1].innerHTML.slice(0,next.children[0].children[1].children[1].innerHTML.length-1)) - parseInt(previous.children[0].children[1].children[1].innerHTML.slice(0,previous.children[0].children[1].children[1].innerHTML.length-1)) })
+            return parseInt(next.children[0].children[1].children[1].innerHTML.slice(1,next.children[0].children[1].children[1].innerHTML.length)) - parseInt(previous.children[0].children[1].children[1].innerHTML.slice(1,previous.children[0].children[1].children[1].innerHTML.length)) })
         break;
       case '2' :
         productList
@@ -79,7 +80,7 @@ function deleteItem(btn) {
     }
   })
 
-  fetch(`https://shoppingapi-server.herokuapp.com/api/user/${currentUserId}/cart/delete/${id_product}`)
+  fetch(`${baseUrl}/api/user/${currentUserId}/cart/delete/${id_product}`)
     .then(res => res.json())
     .then(data => {
       console.log(data)
@@ -113,7 +114,7 @@ function deleteItem(btn) {
           
           let msgElemenMini = msgElement.cloneNode(true)
           msgElemenMini.style.color = 'black'
-          msgElemenMini.style.marginTop = '1rem'
+          // msgElemenMini.style.marginTop = '1rem'
           msgElemenMini.style.borderBottom = '2px solid black'
           msgElemenMini.style.paddingBottom = '.5rem'
       
@@ -156,9 +157,9 @@ function deleteItem(btn) {
                  let msgElementNormal = msgElement.cloneNode(true)
                  msgElementNormal.style.color = 'white'
       
-                 msgElement.style.marginTop = '1rem'
+                //  msgElement.style.marginTop = '1rem'
                  msgElement.style.borderBottom = '2px solid black'
-                 msgElement.style.paddingBottom = '.5rem'
+                //  msgElement.style.paddingBottom = '.5rem'
       
                  cartTbl.parentElement.prepend(msgElement)
                  cartTbl_normal.parentElement.parentElement.appendChild(msgElementNormal)
@@ -250,7 +251,7 @@ function addToCart(btn) {
       }
     })
 
-    fetch(`https://shoppingapi-server.herokuapp.com/api/add-to-cart/${currentUserId}`, {
+    fetch(`${baseUrl}/api/add-to-cart/${currentUserId}`, {
       method : 'POST',
       headers  : {
         'Content-Type' : 'application/json'
@@ -435,7 +436,7 @@ function updateQuantityItem(input) {
     }
   })
   console.log(currentUserId, id_product)
-  fetch(`https://shoppingapi-server.herokuapp.com/api/user/${currentUserId}/cart/update/${id_product}`, {
+  fetch(`${baseUrl}/api/user/${currentUserId}/cart/update/${id_product}`, {
     method : 'POST',
     headers  : {
       'Content-Type' : 'application/json'
@@ -638,7 +639,7 @@ window.onload = (ev) => {
     })
 
     let cartTblMini = document.getElementById('cartTbl-mini')
-    fetch(`https://shoppingapi-server.herokuapp.com/api/user/${currentUserId}/get-cart`)
+    fetch(`${baseUrl}/api/user/${currentUserId}/get-cart`)
       .then(res => res.json())
       .then(data => {
         if(data.code === 200) {
@@ -693,16 +694,16 @@ window.onload = (ev) => {
             let msgElement = document.createElement('h4')
             msgElement.id = 'empty-cart-msg'
             msgElement.textContent = 'Your cart is empty !'
-            msgElement.style.marginTop = '.5rem'
+            // msgElement.style.marginTop = '.5rem'
             msgElement.style.marginLeft = '5px'
             msgElement.style.marginBottom = '0'
             msgElement.style.fontWeight = '600'
-            msgElement.style.letterSpacing = '2px'
+            msgElement.style.letterSpacing = '1px'
 
-            let lineDivide = document.createElement('hr')
-            lineDivide.style.all = "unset"
+            // let lineDivide = document.createElement('hr')
+            // lineDivide.style.all = "unset"
             
-            cartTblMini.parentElement.prepend(lineDivide)
+            // cartTblMini.parentElement.prepend(lineDivide)
             cartTblMini.parentElement.prepend(msgElement)
           }
         }

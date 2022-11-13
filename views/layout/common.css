@@ -49,7 +49,7 @@ html {
     transform : rotate(2deg);
 }
 .product-item {
-    transition : transform .5s;
+    transition : transform .3s;
     cursor: pointer;
     height: 450px;
     border-radius: 1rem;
@@ -71,7 +71,7 @@ html {
 
 .product-item:hover {
     box-shadow : 10px 10px 5px #888888;
-    transform : scale(1.05);
+    transform : translateY(-15px);
 }
 
 .btn-signin {
@@ -535,7 +535,7 @@ a#icon-cart:hover ~ #shopping-cart {
     background-color: white;
     max-height: 400px;
     overflow-y: auto;
-    padding: 0 .5rem 0rem .5rem; 
+    padding: .875rem .5rem .875rem .5rem; 
     margin: 0;
 }
 
@@ -902,6 +902,10 @@ select#sortSelect {
     background-color: transparent;
 }
 
+.product-slide {
+    display: none;
+}
+
 @keyframes hideAnimation {
     to {
         visibility: hidden;
@@ -1111,5 +1115,13 @@ select#sortSelect {
         width: inherit !important;
         height: inherit !important;
         font-size: 16px !important;
+    }
+
+    .product-show-area {
+        display: none;
+    }
+
+    .product-slide {
+        display: block;
     }
 }

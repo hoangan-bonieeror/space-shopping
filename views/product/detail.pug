@@ -5,62 +5,63 @@ block product-detailPage
         .row
             .col-xl-6.col-md-12
                 .product-gallery
-                    .mb-1
-                        img(src=product.image1)
-                    .mb-1
-                        img(src=product.image2)
-                    .mb-1
-                        img(src=product.image3)
-                    .mb-1
-                        img(src=product.image4)
-                    .mb-1
-                        img(src=product.image5)
-                    //- .carousel.slide(id=`carouselProduct-${product.id}` data-bs-ride="carousel")
-                    //-     .carousel-inner
-                    //-         .carousel-item.active
-                    //-             img(src=product.image1)
-                    //-         .carousel-item
-                    //-             img(src=product.image2)
-                    //-         .carousel-item
-                    //-             img(src=product.image3)
-                    //-         .carousel-item
-                    //-             img(src=product.image4)
-                    //-         .carousel-item
-                    //-             img(src=product.image5)
-                        //- button.carousel-control-prev#btn-prev(role='button' data-bs-target=`#carouselProduct-${product.id}` data-bs-slide='prev' )
-                        //-     span.carousel-control-prev-icon(aria-hidden='true' style="background-color : black ; border-radius : 1.5rem; width : 60px; height : 30%;")
-                        //- button.carousel-control-next#btn-next(role='button' data-bs-target=`#carouselProduct-${product.id}` data-bs-slide='next' )
-                        //-     span.carousel-control-next-icon(aria-hidden='true' style="background-color : black ; border-radius : 1.5rem; width : 60px; height : 30%;")
-                //- br
-                //- .selection-product
-                //-     .carousel.slide(data-bs-ride="carouselProduct")
-                //-         .carousel-inner
-                //-             .carousel-item.active
-                //-                 div(data-bs-target=`#carouselProduct-${product.id}` data-bs-slide-to="0")
-                //-                     img(src=product.image1)
-                //-                 div(data-bs-target=`#carouselProduct-${product.id}` data-bs-slide-to="1")
-                //-                     img(src=product.image2)
-                //-                 div(data-bs-target=`#carouselProduct-${product.id}` data-bs-slide-to="2")
-                //-                     img(src=product.image3)
-                //-                 div(data-bs-target=`#carouselProduct-${product.id}` data-bs-slide-to="3")   
-                //-                     img(src=product.image4)
-                //-                 div(data-bs-target=`#carouselProduct-${product.id}` data-bs-slide-to="4")
-                //-                     img(src=product.image5)
-                //-             .carousel-item
-                //-                 div(data-bs-target=`#carouselProduct-${product.id}` data-bs-slide-to="0")
-                //-                     img(src=product.image1)
-                //-                 div(data-bs-target=`#carouselProduct-${product.id}` data-bs-slide-to="1")
-                //-                     img(src=product.image2)
-                //-                 div(data-bs-target=`#carouselProduct-${product.id}` data-bs-slide-to="2")
-                //-                     img(src=product.image3)
-                //-                 div(data-bs-target=`#carouselProduct-${product.id}` data-bs-slide-to="3")   
-                //-                     img(src=product.image4)
-                //-                 div(data-bs-target=`#carouselProduct-${product.id}` data-bs-slide-to="4")
-                //-                     img(src=product.image5)
-                        //- button.carousel-control-prev(role='button' data-bs-target=`#carouselProduct-${product.id}` data-bs-slide='prev' )
-                        //-     span.carousel-control-prev-icon(aria-hidden='true' style="background-color : black")
-                        //- button.carousel-control-next(role='button' data-bs-target=`#carouselProduct-${product.id}` data-bs-slide='next' )
-                        //-     span.carousel-control-next-icon(aria-hidden='true' style="background-color : black")                                                                                                                                                                                                           
+                    .product-show-area
+                        .mb-1
+                            img(src=product.image1)
+                        .mb-1
+                            img(src=product.image2)
+                        .mb-1
+                            img(src=product.image3)
+                        .mb-1
+                            img(src=product.image4)
+                        .mb-1
+                            img(src=product.image5)
+                    .carousel.slide.product-slide(id=`carouselProduct-${product.id}` data-bs-ride="carousel")
+                        .carousel-inner
+                            .carousel-item.active
+                                img(src=product.image1)
+                            .carousel-item
+                                img(src=product.image2)
+                            .carousel-item
+                                img(src=product.image3)
+                            .carousel-item
+                                img(src=product.image4)
+                            .carousel-item
+                                img(src=product.image5)
+                        button.carousel-control-prev#btn-prev(role='button' data-bs-target=`#carouselProduct-${product.id}` data-bs-slide='prev' )
+                            span.carousel-control-prev-icon(aria-hidden='true' style="background-color : black ; border-radius : 1.5rem; width : 60px; height : 30%;")
+                        button.carousel-control-next#btn-next(role='button' data-bs-target=`#carouselProduct-${product.id}` data-bs-slide='next' )
+                            span.carousel-control-next-icon(aria-hidden='true' style="background-color : black ; border-radius : 1.5rem; width : 60px; height : 30%;")
+                br
+                .selection-product.product-slide
+                    .carousel.slide(data-bs-ride="carouselProduct")
+                        .carousel-inner
+                            .carousel-item.active
+                                div(data-bs-target=`#carouselProduct-${product.id}` data-bs-slide-to="0")
+                                    img(src=product.image1)
+                                div(data-bs-target=`#carouselProduct-${product.id}` data-bs-slide-to="1")
+                                    img(src=product.image2)
+                                div(data-bs-target=`#carouselProduct-${product.id}` data-bs-slide-to="2")
+                                    img(src=product.image3)
+                                div(data-bs-target=`#carouselProduct-${product.id}` data-bs-slide-to="3")   
+                                    img(src=product.image4)
+                                div(data-bs-target=`#carouselProduct-${product.id}` data-bs-slide-to="4")
+                                    img(src=product.image5)
+                            .carousel-item
+                                div(data-bs-target=`#carouselProduct-${product.id}` data-bs-slide-to="0")
+                                    img(src=product.image1)
+                                div(data-bs-target=`#carouselProduct-${product.id}` data-bs-slide-to="1")
+                                    img(src=product.image2)
+                                div(data-bs-target=`#carouselProduct-${product.id}` data-bs-slide-to="2")
+                                    img(src=product.image3)
+                                div(data-bs-target=`#carouselProduct-${product.id}` data-bs-slide-to="3")   
+                                    img(src=product.image4)
+                                div(data-bs-target=`#carouselProduct-${product.id}` data-bs-slide-to="4")
+                                    img(src=product.image5)
+                        button.carousel-control-prev(role='button' data-bs-target=`#carouselProduct-${product.id}` data-bs-slide='prev' )
+                            span.carousel-control-prev-icon(aria-hidden='true' style="background-color : black")
+                        button.carousel-control-next(role='button' data-bs-target=`#carouselProduct-${product.id}` data-bs-slide='next' )
+                            span.carousel-control-next-icon(aria-hidden='true' style="background-color : black")                                                                                                                                                                                                           
             .col-xl-6.col-md-12
                 .information-product
                     h3.mb-3= product.name

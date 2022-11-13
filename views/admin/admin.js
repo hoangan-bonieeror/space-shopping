@@ -38,10 +38,6 @@ window.onload = (e) => {
     }
 }
 
-google.charts.load('current',{packages:['corechart']});
-
-google.charts.setOnLoadCallback(drawChart);
-
 function drawChart() {
     let listCookies = document.cookie.split(';')
     listCookies.forEach(cookie => {
@@ -114,9 +110,34 @@ function drawChart() {
                 }
             })
 }
+const wait = (delay = 0) =>
+    new Promise(resolve => setTimeout(resolve, delay));
+
+const setVisible = (loadingElement, visible) => {
+    document.querySelector(loadingElement).style.display = visible ? 'block' : 'none';
+}
+
+window.addEventListener('DOMContentLoaded', () =>
+    wait(3000).then(() => {
+        setVisible('#load', false);
+    })
+    .then(()=> {
+        document.querySelector('#content').style.opacity = 'unset'
+        document.querySelector('#content').style.backgroundColor = 'unset'
+    })
+);
+
 
 window.onload = (e) => {
+    document.querySelector('#content').style.opacity = '0.5'
+    document.querySelector('#content').style.backgroundColor = 'black'
+    setVisible('#load', true);
+    
     if(window.location.href.includes('dashboard')) {
+        google.charts.load('current',{packages:['corechart']});
+
+        google.charts.setOnLoadCallback(drawChart);
+
         let listCookies = document.cookie.split(';')
         listCookies.forEach(cookie => {
         
